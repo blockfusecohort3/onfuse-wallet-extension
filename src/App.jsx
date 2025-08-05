@@ -1,100 +1,94 @@
+// src/App.jsx
 import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { WalletProvider } from "./contexts/WalletContext";
+import ErrorBoundary from "./components/common/ErrorBoundary";
+import Header from "./components/layout/Header";
+import Navbar from "./components/layout/Navbar";
+
+// Pages
+import Landing from "./pages/auth/Landing";
+import Login from "./pages/auth/Login";
+import SignUp from "./pages/auth/SignUp";
+import CreatePassword from "./pages/auth/CreatePassword";
+import ImportWallet from "./pages/auth/ImportWallet";
+import SecretRecovery from "./pages/auth/SecretRecovery";
+import RecoveryGuess from "./pages/auth/RecoveryGuess";
+
+import Home from "./components/wallet/Home";
+import Send from "./components/wallet/Send";
+import Receive from "./components/wallet/Receive";
+import Transactions from "./components/wallet/Transactions";
+
+import Profile from "./pages/profile/Profile";
+import ShowPhrase from "./pages/profile/ShowPhrase";
+import ViewKey from "./pages/profile/ViewKey";
+import PropTypes from 'prop-types';
+
 import "./App.css";
-import { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
 
-// Home
-import Home from "./pages/Home/Home";
-import Send from "./pages/Home/Send";
-import Receive from "./pages/Home/Receive";
 
-import Landing from "./pages/Landing";
+AppRoutes.propTypes = {
+  theme: PropTypes.shape({
+    isDark: PropTypes.bool.isRequired,
+  }).isRequired,
+  toggleTheme: PropTypes.func.isRequired,
+};
 
-// Profile Imports
-import Profile from "./pages/Profile/Profile";
-import Currency from "./pages/Profile/Currency";
-import Network from "./pages/Profile/EthNetwork";
-import Theme from "./pages/Profile/Theme";
-import SeedPhrase from "./pages/Profile/ShowPhrase";
-import PrivateKey from "./pages/Profile/ViewKey"
+function AppRoutes({ theme, toggleTheme }) {
 
-//Components 
-import Navbar from "./components/Navbar/Navbar";
-import Header from "./components/Header";
-
-//Pages Imports
-import Exchange from "./pages/Exchange";
-import Statistics from "./pages/Statistics";
-import Settings from "./pages/Settings";
-import Transactions from "./pages/Transactions";
-
-//Signup Imports
-import SerectRecovery from "./pages/SerectRecovery";
-import SerectRecoveryHidden from "./pages/SerectRecoveryHidden";
-import RecoveryGuess from "./pages/RecoveryGuess";
-import Login from "./components/Login/Login";
-import SignUp from "./pages/SignUp";
-import CreatePassword from "./pages/CreatePassword";
-import ImportWallet from "./pages/ImportWallet";
-
-// Define a separate component for routing
-function AppRoutes({ isLightMode, toggleTheme }) {
-  const location = useLocation(); 
-
-  // Determine if the Navbar should be displayed
-  const showNavbar = !["/", "/Landing", "/signup", "/create-password", "/secret-recovery", "/recovery-guess", "/import-wallet", "/login"].includes(location.pathname);
+  const location = useLocation();
+  const showNavbar = !["/", "/login", "/signup", "/create-password", "/secret-recovery", "/recovery-guess", "/import-wallet"].includes(location.pathname);
 
   return (
-    <>
-    <ToastContainer />
-    <div className={`w-[350px] h-[600px] overflow-hidden ${isLightMode ? "bg-gray-100 text-primary-950" : "bg-primary-950"}`}>
-      <Header isLightMode={isLightMode} toggleTheme={toggleTheme} />
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/send-receive" element={<Home />} />
-        <Route path="/send-token" element={<Send />} />
-        <Route path="/receive-token" element={<Receive />} />
-        <Route path="/transactions" element={<Transactions />} />
-        {/* Profile Route */}
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/currency" element={<Currency />} />
-        <Route path="/network" element={<Network />} />
-        <Route path="/theme" element={<Theme />} />
-        <Route path="/seed-phrase" element={<SeedPhrase />} />
-        <Route path="/private-key" element={<PrivateKey />} />
-       
-
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/import-wallet" element={<ImportWallet/>} />
-        <Route path="/create-password" element={<CreatePassword />} />
-        <Route path="/exchange" element={<Exchange />} />
-        <Route path="/statistics" element={<Statistics />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/secret-recovery" element={<SerectRecovery />} />
-        <Route path="/secret-Recovery-hidden" element={<SerectRecoveryHidden />} />
-        <Route path="/recovery-guess" element={<RecoveryGuess />} />
-      </Routes>
-      {showNavbar && <Navbar />}
-    </div>
-    </>
+    <ErrorBoundary>
+      <div className={`w-[350px] h-[600px] overflow-hidden ${theme.isDark ? "bg-primary-950" : "bg-gray-100"}`}>
+        <Header theme={theme} toggleTheme={toggleTheme} />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/create-password" element={<CreatePassword />} />
+          <Route path="/import-wallet" element={<ImportWallet />} />
+          <Route path="/secret-recovery" element={<SecretRecovery />} />
+          <Route path="/recovery-guess" element={<RecoveryGuess />} />
+          
+          <Route path="/send-receive" element={<Home />} />
+          <Route path="/send-token" element={<Send />} />
+          <Route path="/receive-token" element={<Receive />} />
+          <Route path="/transactions" element={<Transactions />} />
+          
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/seed-phrase" element={<ShowPhrase />} />
+          <Route path="/private-key" element={<ViewKey />} />
+        </Routes>
+        {showNavbar && <Navbar />}
+      </div>
+    </ErrorBoundary>
   );
 }
 
 function App() {
-  const [isLightMode, setIsLightMode] = useState(false);
+  const [theme, setTheme] = useState({ isDark: true });
 
-  // Function to toggle between dark and light mode
   const toggleTheme = () => {
-    setIsLightMode(!isLightMode);
-    document.body.classList.toggle("light", !isLightMode); 
+    setTheme(prev => ({ isDark: !prev.isDark }));
   };
 
+  useEffect(() => {
+    document.body.classList.toggle("light", !theme.isDark);
+  }, [theme.isDark]);
+
   return (
-    <Router>
-      <AppRoutes isLightMode={isLightMode} toggleTheme={toggleTheme} />
-    </Router>
+    <WalletProvider>
+      <Router>
+        <AppRoutes theme={theme} toggleTheme={toggleTheme} />
+        <ToastContainer position="top-right" autoClose={3000} />
+      </Router>
+    </WalletProvider>
   );
 }
 

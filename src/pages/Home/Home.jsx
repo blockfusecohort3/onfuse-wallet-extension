@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaRegCircleDot } from "react-icons/fa6";
 import { BsSendFill } from "react-icons/bs";
 import { MdCallReceived } from "react-icons/md";
 import { FaEthereum } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { getBalance, hexToDecimal } from "../../utils/walletUtils";
+import { getBalance } from "../../utils/walletUtils";
 import axios from "axios";
 import { ethers } from "ethers";
 
@@ -55,7 +55,7 @@ const Home = () => {
   fetchEthPrice();
  },[])
 
-  const hasFetched = useRef(false);
+  // const hasFetched = useRef(false);
 
   useEffect(() => {
     const fetchBalance = async () => {
