@@ -5,7 +5,7 @@ import { FaEthereum } from "react-icons/fa6";
 import { BsSendFill } from "react-icons/bs";
 import { MdCallReceived } from "react-icons/md";
 
-import { useWallet } from "../../contexts/WalletContext";
+import { useWallet } from "../../contexts/WalletContext.jsx";
 import { useWalletBalance } from "../../hooks/useWalletBalance";
 import { NETWORK_COLORS } from "../../constants";
 import NetworkSelector from "./NetworkSelector";

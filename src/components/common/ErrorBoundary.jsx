@@ -5,6 +5,15 @@ class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false, error: null };
+    this._isMounted = false;
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   static getDerivedStateFromError(error) {
@@ -13,7 +22,7 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     // Log error without exposing sensitive data
-    console.error('Application error occurred');
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
   }
 
   render() {
@@ -22,6 +31,7 @@ class ErrorBoundary extends React.Component {
         <div className="flex flex-col items-center justify-center h-full p-4">
           <h2 className="text-xl text-red-500 mb-4">Something went wrong</h2>
           <button 
+            // eslint-disable-next-line react/no-is-mounted
             onClick={() => this.setState({ hasError: false, error: null })}
             className="px-4 py-2 bg-blue-500 text-white rounded"
           >
@@ -34,5 +44,11 @@ class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
+
+import PropTypes from 'prop-types';
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default ErrorBoundary;
