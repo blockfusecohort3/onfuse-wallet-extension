@@ -1,9 +1,9 @@
-import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { WalletProvider } from "./contexts/WalletContext";
+import { WalletProvider, useWallet } from "./contexts/WalletContext";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import Header from "./components/layout/Header";
 import Navbar from "./components/layout/Navbar";
@@ -29,16 +29,30 @@ import PropTypes from 'prop-types';
 
 import "./App.css";
 
+const AuthGuard = ({ children }) => {
 
-AppRoutes.propTypes = {
-  theme: PropTypes.shape({
-    isDark: PropTypes.bool.isRequired,
-  }).isRequired,
-  toggleTheme: PropTypes.func.isRequired,
+  const { currentAccount, loading } = useWallet();
+  const location = useLocation();
+  
+  if (loading) return <div>Loading...</div>;
+  
+  const authRoutes = ["/", "/login", "/signup", "/create-password", "/secret-recovery", "/recovery-guess", "/import-wallet"];
+  const isAuthRoute = authRoutes.includes(location.pathname);
+  
+  if (!currentAccount && !isAuthRoute) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  if (currentAccount && (location.pathname === "/" || location.pathname === "/login")) {
+    return <Navigate to="/send-receive" replace />;
+  }
+  
+  return children;
 };
 
-function AppRoutes({ theme, toggleTheme }) {
 
+
+function AppRoutes({ theme, toggleTheme }) {
   const location = useLocation();
   const showNavbar = !["/", "/login", "/signup", "/create-password", "/secret-recovery", "/recovery-guess", "/import-wallet"].includes(location.pathname);
 
@@ -46,24 +60,26 @@ function AppRoutes({ theme, toggleTheme }) {
     <ErrorBoundary>
       <div className={`w-[350px] h-[600px] overflow-hidden ${theme.isDark ? "bg-primary-950" : "bg-white"}`}>
         <Header theme={theme} toggleTheme={toggleTheme} />
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/create-password" element={<CreatePassword />} />
-          <Route path="/import-wallet" element={<ImportWallet />} />
-          <Route path="/secret-recovery" element={<SecretRecovery />} />
-          <Route path="/recovery-guess" element={<RecoveryGuess />} />
-          
-          <Route path="/send-receive" element={<Home />} />
-          <Route path="/send-token" element={<Send />} />
-          <Route path="/receive-token" element={<Receive />} />
-          <Route path="/transactions" element={<Transactions />} />
-          
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/seed-phrase" element={<ShowPhrase />} />
-          <Route path="/private-key" element={<ViewKey />} />
-        </Routes>
+        <AuthGuard>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/create-password" element={<CreatePassword />} />
+            <Route path="/import-wallet" element={<ImportWallet />} />
+            <Route path="/secret-recovery" element={<SecretRecovery />} />
+            <Route path="/recovery-guess" element={<RecoveryGuess />} />
+            
+            <Route path="/send-receive" element={<Home />} />
+            <Route path="/send-token" element={<Send />} />
+            <Route path="/receive-token" element={<Receive />} />
+            <Route path="/transactions" element={<Transactions />} />
+            
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/seed-phrase" element={<ShowPhrase />} />
+            <Route path="/private-key" element={<ViewKey />} />
+          </Routes>
+        </AuthGuard>
         {showNavbar && <Navbar />}
       </div>
     </ErrorBoundary>
@@ -90,5 +106,17 @@ function App() {
     </WalletProvider>
   );
 }
+
+
+AppRoutes.propTypes = {
+  theme: PropTypes.shape({
+    isDark: PropTypes.bool.isRequired,
+  }).isRequired,
+  toggleTheme: PropTypes.func.isRequired,
+};
+
+AuthGuard.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default App;
