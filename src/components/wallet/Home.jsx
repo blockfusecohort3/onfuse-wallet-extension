@@ -8,8 +8,8 @@ import { MdCallReceived } from "react-icons/md";
 import { useWallet } from "../../contexts/WalletContext";
 import { useWalletBalance } from "../../hooks/useWalletBalance";
 import { NETWORK_COLORS } from "../../constants";
-import NetworkSelector from "../../components/wallet/NetworkSelector";
-import BalanceDisplay from "../../components/wallet/BalanceDisplay";
+import NetworkSelector from "./NetworkSelector";
+import BalanceDisplay from "./BalanceDisplay";
 
 const Home = () => {
   const navigate = useNavigate();

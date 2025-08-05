@@ -18,10 +18,10 @@ import ImportWallet from "./pages/auth/ImportWallet";
 import SecretRecovery from "./pages/auth/SecretRecovery";
 import RecoveryGuess from "./pages/auth/RecoveryGuess";
 
-import Home from "./pages/wallet/Home";
-import Send from "./pages/wallet/Send";
-import Receive from "./pages/wallet/Receive";
-import Transactions from "./pages/wallet/Transactions";
+import Home from "./components/wallet/Home";
+import Send from "./components/wallet/Send";
+import Receive from "./components/wallet/Receive";
+import Transactions from "./components/wallet/Transactions";
 
 import Profile from "./pages/profile/Profile";
 import ShowPhrase from "./pages/profile/ShowPhrase";
