@@ -4,12 +4,13 @@
     left: 0;
     width: 350px;
     height: 70px;
-    background: #4f79ee;
+    background: linear-gradient(135deg, #5865f2 0%, #4f46e5 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    box-shadow: 0 -4px 20px rgba(88, 101, 242, 0.15);
 }
 
 .navigation ul {
@@ -72,9 +73,10 @@
     display: block;
     width: 45px;
     height: 45px;
-    background: #4f79ee;
+    background: linear-gradient(135deg, #5865f2 0%, #4f46e5 100%);
     border-radius: 50%;
     transform: translateY(-38px) scale(0);
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
 }
 
 .navigation ul li.active a .circle {

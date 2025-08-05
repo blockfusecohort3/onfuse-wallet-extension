@@ -38,7 +38,7 @@ const Home = () => {
   }
 
   return (
-    <div className="flex flex-col items-center text-center mt-2 space-y-5">
+    <div className="flex flex-col items-center text-center mt-2 space-y-5 bg-white min-h-screen">
       <BalanceDisplay 
         balance={balance}
         network={network}
@@ -56,37 +56,37 @@ const Home = () => {
           className="flex flex-col items-center"
           onClick={() => navigate("/send-token")}
         >
-          <div className="rounded-full border-2 border-primary-900 p-3">
-            <BsSendFill size={20} className="text-primary-50" />
+          <div className="rounded-full border-2 border-primary-500 p-3 hover:bg-primary-50 transition-colors">
+            <BsSendFill size={20} className="text-primary-500" />
           </div>
-          <span className="mt-1 text-white">Send</span>
+          <span className="mt-1 text-gray-700 font-medium">Send</span>
         </button>
         
         <button
           className="flex flex-col items-center"
           onClick={() => navigate("/receive-token")}
         >
-          <div className="rounded-full border-2 border-primary-900 p-3">
-            <MdCallReceived size={20} className="text-primary-50" />
+          <div className="rounded-full border-2 border-primary-500 p-3 hover:bg-primary-50 transition-colors">
+            <MdCallReceived size={20} className="text-primary-500" />
           </div>
-          <span className="mt-1 text-white">Receive</span>
+          <span className="mt-1 text-gray-700 font-medium">Receive</span>
         </button>
       </div>
 
-      <div className="bg-[#373073] w-[350px] h-screen rounded-2xl">
-        <div className="flex items-center justify-between px-4 py-2">
-          <div className="flex items-center gap-2">
-            <span className="border-2 border-primary-900 rounded-full p-1">
-              <FaEthereum />
+      <div className="bg-gray-50 w-[350px] h-screen rounded-2xl border border-gray-200">
+        <div className="flex items-center justify-between px-4 py-4">
+          <div className="flex items-center gap-3">
+            <span className="border-2 border-primary-500 rounded-full p-2 bg-primary-50">
+              <FaEthereum className="text-primary-500" />
             </span>
             <div className="flex flex-col items-start">
-              <h1 className="text-primary-400 font-semibold">ETH</h1>
-              <p className="text-primary-400">Ethereum</p>
+              <h1 className="text-gray-800 font-semibold">ETH</h1>
+              <p className="text-gray-600">Ethereum</p>
             </div>
           </div>
-          <div className="flex flex-col items-start">
-            <h1 className="text-primary-400 font-semibold">{balance.toFixed(4)} ETH</h1>
-            <p className="text-primary-400">${(balance * ethPrice).toFixed(2)}</p>
+          <div className="flex flex-col items-end">
+            <h1 className="text-gray-800 font-semibold">{balance.toFixed(4)} ETH</h1>
+            <p className="text-gray-600">${(balance * ethPrice).toFixed(2)}</p>
           </div>
         </div>
       </div>
