@@ -1,4 +1,3 @@
-// src/App.jsx
 import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ToastContainer } from 'react-toastify';

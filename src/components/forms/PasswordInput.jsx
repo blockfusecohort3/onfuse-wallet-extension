@@ -1,4 +1,3 @@
-// src/components/forms/PasswordInput.jsx
 import { useState } from "react";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { validatePassword, getPasswordStrength } from "../../utils/validation/passwordValidation";

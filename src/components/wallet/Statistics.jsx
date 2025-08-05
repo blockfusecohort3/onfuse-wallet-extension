@@ -1,4 +1,3 @@
-// src/pages/wallet/Statistics.jsx
 import { useState, useEffect } from 'react';
 import { useWallet } from '../../contexts/WalletContext';
 import { useWalletBalance } from '../../hooks/useWalletBalance';

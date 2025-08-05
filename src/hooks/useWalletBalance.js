@@ -1,4 +1,3 @@
-// src/hooks/useWalletBalance.js
 import { useState, useEffect, useCallback } from 'react';
 import { getBalance } from '../services/walletService';
 import { useWallet } from '../contexts/WalletContext';

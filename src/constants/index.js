@@ -1,4 +1,3 @@
-// src/constants/index.js
 export const WALLET_CONSTANTS = {
     SEED_PHRASE_COUNT: 12,
     NETWORKS: {

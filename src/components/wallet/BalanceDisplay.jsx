@@ -1,4 +1,3 @@
-// src/components/wallet/BalanceDisplay.jsx
 import PropTypes from 'prop-types';
 
 const BalanceDisplay = ({ balance, network, ethPrice, loading }) => {

@@ -1,4 +1,3 @@
-// src/components/wallet/Receive.jsx
 import { useState, useEffect } from "react";
 import QRCode from "qrcode";
 import { IoShareOutline } from "react-icons/io5";

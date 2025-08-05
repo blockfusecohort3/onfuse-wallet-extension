@@ -1,4 +1,3 @@
-// src/components/wallet/NetworkSelector.jsx
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaRegCircleDot } from "react-icons/fa6";
