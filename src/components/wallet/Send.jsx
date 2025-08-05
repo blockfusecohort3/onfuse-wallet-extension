@@ -1,4 +1,3 @@
-// src/pages/wallet/Send.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -34,25 +33,25 @@ const Send = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-5 space-y-8">
-      <div className="space-y-1 w-72">
-        <h1 className="text-primary-400">Amount</h1>
+    <div className="flex flex-col items-center mt-5 space-y-8 bg-white min-h-screen">
+      <div className="space-y-2 w-72">
+        <h1 className="text-gray-800 font-medium">Amount</h1>
         <input
           type="number"
           value={inputAmount}
           onChange={(e) => setInputAmount(e.target.value)}
-          className="border-2 border-gray-300 bg-transparent rounded-full text-primary-400 text-sm p-3 w-full"
+          className="border-2 border-gray-300 bg-white rounded-full text-gray-800 text-sm p-3 w-full focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           placeholder="Input amount"
         />
       </div>
 
-      <div className="space-y-1 w-72">
-        <h1 className="text-primary-400">To</h1>
+      <div className="space-y-2 w-72">
+        <h1 className="text-gray-800 font-medium">To</h1>
         <input
           type="text"
           value={inputAddress}
           onChange={(e) => setInputAddress(e.target.value)}
-          className="border-2 border-gray-300 bg-transparent rounded-full text-primary-400 text-sm p-3 w-full"
+          className="border-2 border-gray-300 bg-white rounded-full text-gray-800 text-sm p-3 w-full focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           placeholder="Enter public address"
         />
       </div>
@@ -62,14 +61,14 @@ const Send = () => {
       <div className="space-x-6">
         <button 
           onClick={() => navigate(-1)}
-          className="w-32 border-2 border-primary-300 rounded-full p-1 text-primary-400"
+          className="w-32 border-2 border-gray-300 rounded-full py-2 text-gray-700 hover:bg-gray-50 transition-colors"
         >
           Cancel
         </button>
         <button
           onClick={handleSend}
           disabled={loading}
-          className="w-32 bg-gradient-to-r from-primary-50 via-primary-200 to-primary-300 rounded-full p-1 text-primary-400"
+          className="w-32 bg-primary-500 hover:bg-primary-600 rounded-full py-2 text-white font-medium transition-colors disabled:opacity-50"
         >
           {loading ? 'Processing...' : 'Send'}
         </button>

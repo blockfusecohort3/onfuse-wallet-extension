@@ -1,4 +1,3 @@
-// src/App.jsx
 import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ToastContainer } from 'react-toastify';
@@ -23,10 +22,10 @@ import Send from "./components/wallet/Send";
 import Receive from "./components/wallet/Receive";
 import Transactions from "./components/wallet/Transactions";
 
-import Profile from "./pages/profile/Profile";
-import ShowPhrase from "./pages/profile/ShowPhrase";
-import ViewKey from "./pages/profile/ViewKey";
-import PropTypes from 'prop-types';
+import Profile from "./pages/Profile/Profile";
+import ShowPhrase from "./pages/Profile/ShowPhrase";
+import ViewKey from "./pages/Profile/ViewKey";
+import { checkPropTypes } from "prop-types";
 
 import "./App.css";
 
@@ -45,7 +44,7 @@ function AppRoutes({ theme, toggleTheme }) {
 
   return (
     <ErrorBoundary>
-      <div className={`w-[350px] h-[600px] overflow-hidden ${theme.isDark ? "bg-primary-950" : "bg-gray-100"}`}>
+      <div className={`w-[350px] h-[600px] overflow-hidden ${theme.isDark ? "bg-primary-950" : "bg-white"}`}>
         <Header theme={theme} toggleTheme={toggleTheme} />
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -72,7 +71,7 @@ function AppRoutes({ theme, toggleTheme }) {
 }
 
 function App() {
-  const [theme, setTheme] = useState({ isDark: true });
+  const [theme, setTheme] = useState({ isDark: false });
 
   const toggleTheme = () => {
     setTheme(prev => ({ isDark: !prev.isDark }));

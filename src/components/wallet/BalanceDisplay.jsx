@@ -1,4 +1,3 @@
-// src/components/wallet/BalanceDisplay.jsx
 import PropTypes from 'prop-types';
 
 const BalanceDisplay = ({ balance, network, ethPrice, loading }) => {
@@ -8,17 +7,17 @@ const BalanceDisplay = ({ balance, network, ethPrice, loading }) => {
     if (loading) {
       return (
         <div className="space-y-3 mb-6">
-          <h1 className="text-white text-xl">Available Balance</h1>
-          <p className="text-primary-400">Loading...</p>
+          <h1 className="text-gray-800 text-xl font-semibold">Available Balance</h1>
+          <p className="text-gray-600">Loading...</p>
         </div>
       );
     }
   
     return (
       <div className="space-y-3 mb-6">
-        <h1 className="text-white text-xl">Available Balance</h1>
-        <p className="text-primary-400">{balance.toFixed(4)} {displayToken}</p>
-        <p className="text-primary-400">${dollarEquivalent}</p>
+        <h1 className="text-gray-800 text-xl font-semibold">Available Balance</h1>
+        <p className="text-gray-700 text-lg font-medium">{balance.toFixed(4)} {displayToken}</p>
+        <p className="text-gray-600">${dollarEquivalent}</p>
       </div>
     );
   };

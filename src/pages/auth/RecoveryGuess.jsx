@@ -1,4 +1,3 @@
-// src/pages/auth/RecoveryGuess.jsx - REFACTORED
 import { useEffect, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";

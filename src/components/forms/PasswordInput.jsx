@@ -1,4 +1,3 @@
-// src/components/forms/PasswordInput.jsx
 import { useState } from "react";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { validatePassword, getPasswordStrength } from "../../utils/validation/passwordValidation";
@@ -22,7 +21,7 @@ const PasswordInput = ({ value, onChange, placeholder, error, showValidation = f
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className="border-2 border-gray-300 bg-transparent rounded-full px-4 text-primary-400 text-sm p-2 w-full pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border-2 border-gray-300 bg-white rounded-full px-4 text-gray-800 text-sm p-3 w-full pr-10 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           placeholder={placeholder}
         />
         <div
@@ -30,9 +29,9 @@ const PasswordInput = ({ value, onChange, placeholder, error, showValidation = f
           onClick={togglePasswordVisibility}
         >
           {showPassword ? (
-            <IoEyeOffOutline className="text-white" />
+            <IoEyeOffOutline className="text-gray-500 hover:text-gray-700" />
           ) : (
-            <IoEyeOutline className="text-white" />
+            <IoEyeOutline className="text-gray-500 hover:text-gray-700" />
           )}
         </div>
       </div>

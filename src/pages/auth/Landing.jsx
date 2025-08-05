@@ -1,4 +1,3 @@
-// src/pages/auth/Landing.jsx
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 // import { ArrowRight } from "lucide-react";
@@ -13,7 +12,7 @@ const Landing = () => {
 
   const handleSignup = useCallback(() => {
     setClicked(true);
-    navigate("/signup"); // Remove setTimeout for better performance
+    navigate("/signup");
   }, [navigate]);
 
   return (

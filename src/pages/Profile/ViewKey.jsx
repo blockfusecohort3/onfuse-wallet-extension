@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 import { GoCopy } from 'react-icons/go';
 
@@ -6,6 +6,7 @@ const ViewKey = () => {
     const [showPhrase, setShowPhrase] = useState(false);
 
     // Destructure location state to get passphrase and hashedPassword
+  // eslint-disable-next-line no-unused-vars
   const { passphrase, hashedPassword } = location.state || {}; 
 
      // Handle undefined passphrase case by setting a fallback

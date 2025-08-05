@@ -1,4 +1,3 @@
-// src/hooks/useSecureForm.js
 import { useState, useCallback } from 'react';
 
 export const useSecureForm = (initialValues = {}) => {
