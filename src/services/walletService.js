@@ -1,9 +1,38 @@
-// src/services/walletService.js
 import { ethers } from 'ethers';
 import { secureStorage } from '../utils/storage/secureStorage';
 import { validateMnemonic, validateAddress } from '../utils/validation';
 import { WALLET_CONSTANTS } from '../constants';
 import blockies from 'ethereum-blockies';
+
+// Use free public providers with fallbacks
+const getProvider = (network) => {
+  const providers = {
+    ethereum: [
+      'https://eth.public-rpc.com',
+      'https://ethereum.publicnode.com',
+      'https://rpc.ankr.com/eth'
+    ],
+    sepolia: [
+      'https://sepolia.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+      'https://rpc.sepolia.org',
+      'https://ethereum-sepolia.publicnode.com'
+    ]
+  };
+
+  const rpcUrls = providers[network] || providers.sepolia;
+  
+  // Try providers in sequence
+  for (const url of rpcUrls) {
+    try {
+      return new ethers.providers.JsonRpcProvider(url);
+    } catch {
+      continue;
+    }
+  }
+  
+  // Fallback to default provider
+  return ethers.getDefaultProvider(network === 'ethereum' ? 'homestead' : 'sepolia');
+};
 
 export const generateMnemonic = () => {
   const randomEntropyBytes = ethers.utils.randomBytes(16);
@@ -37,7 +66,7 @@ export const importWallet = (mnemonic) => {
   };
 };
 
-export const saveWallet = (walletData) => {
+export const saveWallet = async (walletData) => {
   try {
     secureStorage.setItem(WALLET_CONSTANTS.STORAGE_KEYS.MNEMONIC, walletData.mnemonic);
     secureStorage.setItem(WALLET_CONSTANTS.STORAGE_KEYS.ADDRESS, walletData.address);
@@ -59,27 +88,24 @@ export const saveWallet = (walletData) => {
 export const getBalance = async (network, address) => {
   validateAddress(address);
   
-  const provider = ethers.getDefaultProvider(
-    network === WALLET_CONSTANTS.NETWORKS.ETHEREUM ? 'homestead' : 'sepolia'
-  );
+  const provider = getProvider(network);
   
   try {
     const balance = await provider.getBalance(address);
     return ethers.utils.formatEther(balance);
-  } catch {
-    throw new Error('Failed to fetch balance');
+  } catch (error) {
+    console.error('Balance fetch failed:', error.message);
+    return '0.0';
   }
 };
 
 export const sendTransaction = async (amount, receiver) => {
   validateAddress(receiver);
   
-  const privateKey = secureStorage.getItem(WALLET_CONSTANTS.STORAGE_KEYS.PRIVATE_KEY);
+  const privateKey = await secureStorage.getItem(WALLET_CONSTANTS.STORAGE_KEYS.PRIVATE_KEY);
   if (!privateKey) throw new Error('Private key not found');
   
-  const provider = new ethers.providers.JsonRpcProvider(
-    "https://sepolia.infura.io/v3/2fa89a3017a64226a09f8d4ad65aaf83"
-  );
+  const provider = getProvider('sepolia');
   const wallet = new ethers.Wallet(privateKey, provider);
 
   const tx = {
@@ -95,7 +121,7 @@ export const sendTransaction = async (amount, receiver) => {
     const txResponse = await wallet.sendTransaction(tx);
     const receipt = await txResponse.wait();
     return receipt;
-  } catch {
-    throw new Error('Transaction failed');
+  } catch (error) {
+    throw new Error('Transaction failed: ' + error.message);
   }
 };
