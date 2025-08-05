@@ -1,9 +1,11 @@
+// src/pages/auth/CreatePassword.jsx
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { useSecureForm } from "../../hooks/useSecureForm";
 import { createWallet, saveWallet } from "../../services/walletService";
 import { useWallet } from "../../contexts/WalletContext";
+import { validatePassword } from "../../utils/validation/passwordValidation";
 import PasswordInput from "../../components/forms/PasswordInput";
 import Button from "../../components/common/Button";
 
@@ -18,6 +20,13 @@ const CreatePassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate password strength
+    const passwordValidation = validatePassword(values.password);
+    if (!passwordValidation.isValid) {
+      setError('password', passwordValidation.errors[0]);
+      return;
+    }
     
     if (values.password !== values.confirmPassword) {
       setError('confirmPassword', 'Passwords do not match');
@@ -60,6 +69,7 @@ const CreatePassword = () => {
           onChange={(value) => setValue('password', value)}
           placeholder="New Password (8 characters min)"
           error={errors.password}
+          showValidation={true}
         />
         
         <PasswordInput
