@@ -1,11 +1,7 @@
 import PropTypes from 'prop-types';
 
-Button.propTypes = {
-    children: PropTypes.node.isRequired,
-    loading: PropTypes.bool,
-    className: PropTypes.string,
-  };
-  
+
+
 const Button = ({ children, loading, className, ...props }) => {
     return (
       <button
@@ -16,6 +12,12 @@ const Button = ({ children, loading, className, ...props }) => {
         {loading ? 'Loading...' : children}
       </button>
     );
+  };
+
+  Button.propTypes = {
+    children: PropTypes.node.isRequired,
+    loading: PropTypes.bool,
+    className: PropTypes.string,
   };
   
   export default Button;

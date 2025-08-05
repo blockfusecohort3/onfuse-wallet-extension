@@ -3,13 +3,6 @@ import { useState } from "react";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import PropTypes from "prop-types";
 
-PasswordInput.propTypes = { 
-    value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    placeholder: PropTypes.string.isRequired,
-    error: PropTypes.string,
-};
-
 const PasswordInput = ({ value, onChange, placeholder, error }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -39,6 +32,13 @@ const PasswordInput = ({ value, onChange, placeholder, error }) => {
       {error && <p className="text-red-500 text-sm">{error}</p>}
     </div>
   );
+};
+
+PasswordInput.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  error: PropTypes.string,
 };
 
 export default PasswordInput;

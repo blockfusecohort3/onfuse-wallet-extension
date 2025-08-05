@@ -26,10 +26,20 @@ import Transactions from "./components/wallet/Transactions";
 import Profile from "./pages/profile/Profile";
 import ShowPhrase from "./pages/profile/ShowPhrase";
 import ViewKey from "./pages/profile/ViewKey";
+import PropTypes from 'prop-types';
 
 import "./App.css";
 
+
+AppRoutes.propTypes = {
+  theme: PropTypes.shape({
+    isDark: PropTypes.bool.isRequired,
+  }).isRequired,
+  toggleTheme: PropTypes.func.isRequired,
+};
+
 function AppRoutes({ theme, toggleTheme }) {
+
   const location = useLocation();
   const showNavbar = !["/", "/login", "/signup", "/create-password", "/secret-recovery", "/recovery-guess", "/import-wallet"].includes(location.pathname);
 

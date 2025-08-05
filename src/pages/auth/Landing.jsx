@@ -1,13 +1,14 @@
 // src/pages/auth/Landing.jsx
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+// import { ArrowRight } from "lucide-react";
+// import { motion } from "framer-motion";
 import { TypeAnimation } from 'react-type-animation';
 import Logo from "../../assets/images/onfuse-logo.png";
 
 const Landing = () => {
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [clicked, setClicked] = useState(false);
 
   const handleSignup = useCallback(() => {
@@ -31,7 +32,7 @@ const Landing = () => {
         <p className="text-white">Securely store and manage all your crypto in one place.</p>
       </div>
       <button onClick={handleSignup} className="mt-10 bg-gradient-to-r from-primary-50 via-primary-200 to-primary-300 text-primary-400 px-8 py-2 rounded-full">
-        Let's Start
+        Let&apos;s Start
       </button>
     </div>
   );

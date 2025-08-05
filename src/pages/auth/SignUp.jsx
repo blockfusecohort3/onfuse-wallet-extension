@@ -31,7 +31,7 @@ const SignUp = () => {
   return (
     <div className='flex flex-col items-center justify-center mt-8'>
       <div className='flex flex-col items-center space-y-2'>
-        <h1 className='text-primary-400 text-xl'>Let's get started</h1>
+        <h1 className='text-primary-400 text-xl'>Let&apos;s get started</h1>
         <p className='text-primary-400'>Create Wallet</p>
       </div>
       <div className='space-y-6 flex flex-col items-center mt-8'>
@@ -44,7 +44,7 @@ const SignUp = () => {
             onChange={handleCheckboxChange}
           />
           <p className='text-primary-400'>
-            I agree to Onfuse's{' '}
+            I agree to Onfuse&apos;s{' '}
             <a href='#' target='_blank' rel='noopener noreferrer'>
               <span className='text-blue-500 underline'>Terms of Use</span>
             </a>

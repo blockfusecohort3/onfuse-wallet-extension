@@ -1,5 +1,5 @@
 // src/pages/auth/RecoveryGuess.jsx - REFACTORED
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { replaceRandomMnemonics, validateMnemonics } from "../../utils/helpers";
@@ -13,20 +13,23 @@ const RecoveryGuess = () => {
   const { errors } = formState;
 
   const mnemonic = location.state?.mnemonic;
+
+  const seedPhrases = useMemo(() => mnemonic?.split(" ") || [], [mnemonic]);
   
+  const newSeedPhrase = useMemo(() => (mnemonic ? replaceRandomMnemonics(seedPhrases) : []), [mnemonic, seedPhrases]);
+
+  useEffect(() => {
+    if (mnemonic) {
+      newSeedPhrase.forEach((phrase, index) => {
+        setValue((index + 1).toString(), phrase);
+      });
+    }
+  }, [mnemonic, newSeedPhrase, setValue]);
+
   if (!mnemonic) {
     navigate("/");
     return null;
   }
-
-  const seedPhrases = mnemonic.split(" ");
-  const newSeedPhrase = replaceRandomMnemonics(seedPhrases);
-
-  useEffect(() => {
-    newSeedPhrase.forEach((phrase, index) => {
-      setValue((index + 1).toString(), phrase);
-    });
-  }, [newSeedPhrase, setValue]);
 
   const onSubmit = (data) => {
     const guessedPhrase = Object.values(data);
