@@ -22,10 +22,10 @@ import Send from "./components/wallet/Send";
 import Receive from "./components/wallet/Receive";
 import Transactions from "./components/wallet/Transactions";
 
-import Profile from "./pages/profile/Profile";
-import ShowPhrase from "./pages/profile/ShowPhrase";
-import ViewKey from "./pages/profile/ViewKey";
-import PropTypes from 'prop-types';
+import Profile from "./pages/Profile/Profile";
+import ShowPhrase from "./pages/Profile/ShowPhrase";
+import ViewKey from "./pages/Profile/ViewKey";
+import { checkPropTypes } from "prop-types";
 
 import "./App.css";
 
