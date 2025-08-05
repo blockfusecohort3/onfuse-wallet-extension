@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { replaceRandomMnemonics, validateMnemonics } from "../../utils/helpers";
+import { helperMethods } from "../../utils/helpers";
 import { toast } from "react-toastify";
 import { WALLET_CONSTANTS } from "../../constants";
 
@@ -15,7 +15,7 @@ const RecoveryGuess = () => {
 
   const seedPhrases = useMemo(() => mnemonic?.split(" ") || [], [mnemonic]);
   
-  const newSeedPhrase = useMemo(() => (mnemonic ? replaceRandomMnemonics(seedPhrases) : []), [mnemonic, seedPhrases]);
+  const newSeedPhrase = useMemo(() => (mnemonic ? helperMethods.replaceRandomMnemonics(seedPhrases) : []), [mnemonic, seedPhrases]);
 
   useEffect(() => {
     if (mnemonic) {
@@ -32,7 +32,7 @@ const RecoveryGuess = () => {
 
   const onSubmit = (data) => {
     const guessedPhrase = Object.values(data);
-    const isValid = validateMnemonics(seedPhrases, guessedPhrase);
+    const isValid = helperMethods.validateMnemonics(seedPhrases, guessedPhrase);
 
     if (isValid) {
       toast.success("Phrase confirmed successfully");
