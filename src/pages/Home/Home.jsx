@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaRegCircleDot } from "react-icons/fa6";
 import { BsSendFill } from "react-icons/bs";
