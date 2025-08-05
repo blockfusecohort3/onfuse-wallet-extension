@@ -19,7 +19,7 @@ const Statistics = () => {
         const data = await response.json();
         setEthPrice(data.ethereum.usd);
         setPriceChange(data.ethereum.usd_24h_change);
-      } catch (error) {
+      } catch {
         console.error('Price fetch failed');
       }
     };

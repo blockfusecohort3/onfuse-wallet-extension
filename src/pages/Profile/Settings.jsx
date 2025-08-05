@@ -37,7 +37,7 @@ const Settings = () => {
       
       navigate('/');
       toast.success('Wallet deleted successfully');
-    } catch (error) {
+    } catch {
       toast.error('Failed to delete wallet');
     }
   };
