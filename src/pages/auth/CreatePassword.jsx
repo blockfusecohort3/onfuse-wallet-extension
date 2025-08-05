@@ -54,10 +54,10 @@ const CreatePassword = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-5 space-y-6">
-      <div className="text-center text-primary-400">
-        <h1 className="text-xl mb-2">Create Password</h1>
-        <p className="text-sm m-5">
+    <div className="flex flex-col items-center mt-5 space-y-6 bg-white min-h-screen">
+      <div className="text-center">
+        <h1 className="text-xl mb-2 text-gray-800 font-semibold">Create Password</h1>
+        <p className="text-sm m-5 text-gray-600">
           This password will unlock your Onfuse wallet only on this device.
         </p>
       </div>
@@ -83,9 +83,9 @@ const CreatePassword = () => {
             type="checkbox"
             checked={values.isChecked}
             onChange={(e) => setValue('isChecked', e.target.checked)}
-            className="w-5 h-5"
+            className="w-5 h-5 text-primary-500 border-gray-300 rounded focus:ring-primary-500"
           />
-          <p className="text-sm text-primary-400">
+          <p className="text-sm text-gray-700">
             I understand that Onfuse cannot recover this password for me.
           </p>
         </div>
@@ -95,7 +95,7 @@ const CreatePassword = () => {
         <Button
           type="submit"
           loading={loading}
-          className="w-full bg-[#5865F2] text-primary-400 py-2 rounded-full"
+          className="w-full bg-primary-500 hover:bg-primary-600 text-white py-3 rounded-full font-medium transition-colors"
         >
           Create Wallet
         </Button>

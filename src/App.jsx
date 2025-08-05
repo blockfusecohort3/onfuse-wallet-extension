@@ -44,7 +44,7 @@ function AppRoutes({ theme, toggleTheme }) {
 
   return (
     <ErrorBoundary>
-      <div className={`w-[350px] h-[600px] overflow-hidden ${theme.isDark ? "bg-primary-950" : "bg-gray-100"}`}>
+      <div className={`w-[350px] h-[600px] overflow-hidden ${theme.isDark ? "bg-primary-950" : "bg-white"}`}>
         <Header theme={theme} toggleTheme={toggleTheme} />
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -71,7 +71,7 @@ function AppRoutes({ theme, toggleTheme }) {
 }
 
 function App() {
-  const [theme, setTheme] = useState({ isDark: true });
+  const [theme, setTheme] = useState({ isDark: false });
 
   const toggleTheme = () => {
     setTheme(prev => ({ isDark: !prev.isDark }));
