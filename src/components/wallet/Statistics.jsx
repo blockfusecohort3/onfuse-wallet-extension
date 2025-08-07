@@ -37,7 +37,7 @@ const Statistics = () => {
   }
 
   return (
-    <div className="p-4 space-y-6">
+    <div className="p-4 bg-gray-950 space-y-6">
       <h1 className="text-xl text-primary-400 font-semibold">Portfolio Statistics</h1>
       
       {/* Portfolio Overview */}

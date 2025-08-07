@@ -27,7 +27,7 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex flex-col items-center justify-center h-full p-4">
+        <div className="flex flex-col bg-gray-950 justify-center h-full p-4">
           <h2 className="text-xl text-red-500 mb-4">Something went wrong</h2>
           <button 
             // eslint-disable-next-line react/no-is-mounted
