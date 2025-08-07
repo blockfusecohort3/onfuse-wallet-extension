@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { FaEthereum } from "react-icons/fa6";
 import { BsSendFill } from "react-icons/bs";
 import { MdCallReceived } from "react-icons/md";
@@ -10,6 +11,15 @@ import { NETWORK_COLORS } from "../../constants";
 import NetworkSelector from "./NetworkSelector";
 import BalanceDisplay from "./BalanceDisplay";
 
+const fadeIn = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay },
+  },
+});
+
 const Home = () => {
   const navigate = useNavigate();
   const { currentAccount, network, dispatch } = useWallet();
@@ -19,18 +29,20 @@ const Home = () => {
   useEffect(() => {
     const fetchEthPrice = async () => {
       try {
-        const response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd");
+        const response = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+        );
         const data = await response.json();
         setEthPrice(data.ethereum.usd);
       } catch {
-        console.error('Price fetch failed');
+        console.error("Price fetch failed");
       }
     };
     fetchEthPrice();
   }, []);
 
   const handleNetworkChange = (newNetwork) => {
-    dispatch({ type: 'SET_NETWORK', payload: newNetwork.name.toLowerCase() });
+    dispatch({ type: "SET_NETWORK", payload: newNetwork.name.toLowerCase() });
   };
 
   if (!currentAccount) {
@@ -38,59 +50,85 @@ const Home = () => {
   }
 
   return (
-    <div className="flex flex-col items-center text-center mt-2 space-y-5 bg-white min-h-screen">
-      <BalanceDisplay 
-        balance={balance}
-        network={network}
-        ethPrice={ethPrice}
-        loading={loading}
-      />
-      
-      <NetworkSelector 
-        selectedNetwork={{ name: network, color: NETWORK_COLORS[network] }}
-        onNetworkChange={handleNetworkChange}
-      />
+    <motion.div
+      className="flex flex-col items-center text-center text-white bg-gray-950 min-h-screen py-8"
+      initial="initial"
+      animate="animate"
+    >
+      <motion.div {...fadeIn(0)}>
+        <BalanceDisplay
+          balance={balance}
+          network={network}
+          ethPrice={ethPrice}
+          loading={loading}
+        />
+      </motion.div>
 
-      <div className="flex space-x-8">
-        <button
+      <motion.div {...fadeIn(0.2)}>
+        <NetworkSelector
+          selectedNetwork={{
+            name: network,
+            color: NETWORK_COLORS[network],
+          }}
+          onNetworkChange={handleNetworkChange}
+        />
+      </motion.div>
+
+      <motion.div {...fadeIn(0.4)} className="flex space-x-10 mt-6">
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.05 }}
           className="flex flex-col items-center"
           onClick={() => navigate("/send-token")}
         >
-          <div className="rounded-full border-2 border-primary-500 p-3 hover:bg-primary-50 transition-colors">
-            <BsSendFill size={20} className="text-primary-500" />
+          <div className="rounded-full border-2 border-primary-500 p-4 bg-gray-700 hover:scale-105 group transition-transform">
+            <BsSendFill size={22} className="text-gray-200 transform transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
           </div>
-          <span className="mt-1 text-gray-700 font-medium">Send</span>
-        </button>
-        
-        <button
+          <span className="mt-2 text-gray-400 font-semibold">Send</span>
+        </motion.button>
+
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.05 }}
           className="flex flex-col items-center"
           onClick={() => navigate("/receive-token")}
         >
-          <div className="rounded-full border-2 border-primary-500 p-3 hover:bg-primary-50 transition-colors">
-            <MdCallReceived size={20} className="text-primary-500" />
-          </div>
-          <span className="mt-1 text-gray-700 font-medium">Receive</span>
-        </button>
-      </div>
+        <div className="rounded-full border-2 border-primary-500 p-4 group bg-gray-700 hover:scale-105 transition-transform">
+  <MdCallReceived
+    size={22}
+    className="text-gray-200 transform transition-transform duration-300 group-hover:translate-y-1 group-hover:-translate-x-1"
+  />
+</div>
 
-      <div className="bg-gray-50 w-[350px] h-screen rounded-2xl border border-gray-200">
-        <div className="flex items-center justify-between px-4 py-4">
+          <span className="mt-2 text-gray-400 font-semibold">Receive</span>
+        </motion.button>
+      </motion.div>
+
+      <motion.div
+        {...fadeIn(0.6)}
+        className="mt-7 w-[320px] bg-gradient-to-br mb-10 from-gray-800/70 to-gray-700/60 rounded-2xl border border-gray-500 shadow-xl backdrop-blur-lg"
+      >
+        <div className="flex items-center justify-between  px-5 py-5">
           <div className="flex items-center gap-3">
-            <span className="border-2 border-primary-500 rounded-full p-2 bg-primary-50">
-              <FaEthereum className="text-primary-500" />
+            <span className="border-2 border-primary-500 rounded-full p-3 bg-gray-700">
+              <FaEthereum className="text-primary-500 text-lg" />
             </span>
             <div className="flex flex-col items-start">
-              <h1 className="text-gray-800 font-semibold">ETH</h1>
-              <p className="text-gray-600">Ethereum</p>
+              <h1 className="text-white font-semibold">ETH</h1>
+              <p className="text-gray-400 text-sm">Ethereum</p>
             </div>
           </div>
           <div className="flex flex-col items-end">
-            <h1 className="text-gray-800 font-semibold">{balance.toFixed(4)} ETH</h1>
-            <p className="text-gray-600">${(balance * ethPrice).toFixed(2)}</p>
+            <h1 className="text-white font-semibold text-lg">
+              {balance.toFixed(4)} ETH
+            </h1>
+            <p className="text-gray-400 text-sm">
+              ${ethPrice ? (balance * ethPrice).toFixed(2) : "-"}
+            </p>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

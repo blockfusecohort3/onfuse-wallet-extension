@@ -2,7 +2,7 @@ import React from 'react'
 
 const Exchange = () => {
   return (
-    <div>Exchange</div>
+    <div className='bg-gray-950'>Exchange</div>
   )
 }
 
