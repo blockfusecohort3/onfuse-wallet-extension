@@ -2,6 +2,7 @@ import { HashRouter as Router, Routes, Route, useLocation, Navigate } from "reac
 import { useState, useEffect } from "react";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PropTypes from 'prop-types';
 
 import { WalletProvider, useWallet } from "./contexts/WalletContext";
 import ErrorBoundary from "./components/common/ErrorBoundary";
@@ -22,10 +23,10 @@ import Send from "./components/wallet/Send";
 import Receive from "./components/wallet/Receive";
 import Transactions from "./components/wallet/Transactions";
 
-import Profile from "./pages/profile/Profile";
-import ShowPhrase from "./pages/profile/ShowPhrase";
-import ViewKey from "./pages/profile/ViewKey";
-import PropTypes from 'prop-types';
+import Profile from "./pages/Profile/Profile";
+import ShowPhrase from "./pages/Profile/ShowPhrase";
+import ViewKey from "./pages/Profile/ViewKey";
+// import { checkPropTypes } from "prop-types";
 
 import "./App.css";
 
@@ -55,6 +56,7 @@ const AuthGuard = ({ children }) => {
 function AppRoutes({ theme, toggleTheme }) {
   const location = useLocation();
   const showNavbar = !["/", "/login", "/signup", "/create-password", "/secret-recovery", "/recovery-guess", "/import-wallet"].includes(location.pathname);
+  const showHeader = !["/", "/login", "/signup", "/create-password", "/secret-recovery", "/recovery-guess", "/import-wallet"].includes(location.pathname);
 
   return (
     <ErrorBoundary>

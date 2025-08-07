@@ -1,7 +1,7 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { replaceRandomMnemonics, validateMnemonics } from "../../utils/helpers";
+import { helperMethods } from "../../utils/helpers";
 import { toast } from "react-toastify";
 import { WALLET_CONSTANTS } from "../../constants";
 
@@ -12,10 +12,40 @@ const RecoveryGuess = () => {
   const { errors } = formState;
 
   const mnemonic = location.state?.mnemonic;
+  console.log(mnemonic)
 
   const seedPhrases = useMemo(() => mnemonic?.split(" ") || [], [mnemonic]);
-  
-  const newSeedPhrase = useMemo(() => (mnemonic ? replaceRandomMnemonics(seedPhrases) : []), [mnemonic, seedPhrases]);
+  console.log(seedPhrases)
+
+  // const newSeedPhrase = useMemo(() => {
+  //   if (!mnemonic) return [];
+  //   const result = helperMethods.replaceRandomMnemonics(seedPhrases);
+  //   console.log("result:",result)
+  //   return Array.isArray(result) ? result : [];
+  // }, [mnemonic, seedPhrases]);
+
+  const [newSeedPhrase, setNewSeedPhrase] = useState([]);
+
+useEffect(() => {
+  const fetchNewSeedPhrase = async () => {
+    if (!mnemonic) return;
+
+    try {
+      const result = await helperMethods.replaceRandomMnemonics(seedPhrases);
+      if (Array.isArray(result)) {
+        setNewSeedPhrase(result);
+      } else {
+        console.error("Unexpected result from replaceRandomMnemonics:", result);
+      }
+    } catch (error) {
+      console.error("Error replacing random mnemonics:", error);
+    }
+  };
+
+  fetchNewSeedPhrase();
+}, [mnemonic, seedPhrases]);
+
+
 
   useEffect(() => {
     if (mnemonic) {
@@ -30,9 +60,13 @@ const RecoveryGuess = () => {
     return null;
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const guessedPhrase = Object.values(data);
-    const isValid = validateMnemonics(seedPhrases, guessedPhrase);
+    console.log("guessedPhrase", guessedPhrase)
+    console.log("seedP", seedPhrases)
+    const isValid = await helperMethods.validateMnemonics(seedPhrases, guessedPhrase);
+    console.log("isValid", isValid)
+
 
     if (isValid) {
       toast.success("Phrase confirmed successfully");
@@ -57,9 +91,8 @@ const RecoveryGuess = () => {
                 <input
                   key={fieldName}
                   type="text"
-                  className={`rounded-lg w-20 text-center ${
-                    errors[fieldName] ? "border border-red-700" : "border-none"
-                  }`}
+                  className={`rounded-lg w-20 text-center ${errors[fieldName] ? "border border-red-700" : "border-none"
+                    }`}
                   placeholder=""
                   {...register(fieldName, {
                     validate: (value) => !!value || "Required",

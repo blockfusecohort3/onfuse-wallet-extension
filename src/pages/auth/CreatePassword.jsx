@@ -37,6 +37,8 @@ const CreatePassword = () => {
       return;
     }
 
+    localStorage.setItem("password", values.password)
+
     setLoading(true);
     try {
       const walletData = createWallet();
