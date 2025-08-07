@@ -1,27 +1,38 @@
 import { useState } from "react";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { motion } from "framer-motion";
 import { validatePassword, getPasswordStrength } from "../../utils/validation/passwordValidation";
 import PropTypes from "prop-types";
 
 const PasswordInput = ({ value, onChange, placeholder, error, showValidation = false }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  
+
   const validation = validatePassword(value);
   const strength = getPasswordStrength(value);
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   return (
-    <div className="space-y-2">
-      <div className="relative flex items-center">
+    <div className="text-white">
+      <motion.div
+        key={error || "no-error"}
+        animate={error ? { x: [0, -10, 10, -10, 10, 0] } : {}}
+        transition={{ duration: 0.4 }}
+        className="relative flex items-center"
+      >
         <input
           type={showPassword ? "text" : "password"}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className="border-2 border-gray-300 bg-white rounded-full px-4 text-gray-800 text-sm p-3 w-full pr-10 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          className={`border-2 rounded-full px-4 text-gray-300 text-sm p-3 w-full pr-10 focus:outline-none bg-gray-500/30 transition-all duration-300
+            ${
+              error
+                ? "border-red-500 border-2 focus:ring-red-500 focus:border-red-500"
+                : "border-gray-800 border-2 focus:ring-primary-500 focus:border-primary-500"
+            }`}
           placeholder={placeholder}
         />
         <div
@@ -29,14 +40,13 @@ const PasswordInput = ({ value, onChange, placeholder, error, showValidation = f
           onClick={togglePasswordVisibility}
         >
           {showPassword ? (
-            <IoEyeOffOutline className="text-gray-500 hover:text-gray-700" />
+            <IoEyeOffOutline className="text-gray-500 hover:text-gray-600" />
           ) : (
-            <IoEyeOutline className="text-gray-500 hover:text-gray-700" />
+            <IoEyeOutline className="text-gray-500 hover:text-gray-600" />
           )}
         </div>
-      </div>
+      </motion.div>
 
-      {/* Password Strength Indicator */}
       {showValidation && value && (
         <div className="space-y-1">
           <div className="flex items-center space-x-2">
@@ -45,14 +55,15 @@ const PasswordInput = ({ value, onChange, placeholder, error, showValidation = f
               {strength.strength}
             </span>
           </div>
-          
-          {/* Progress Bar */}
+
           <div className="w-full bg-gray-200 rounded-full h-1">
-            <div 
+            <div
               className={`h-1 rounded-full transition-all duration-300 ${
-                strength.strength === 'Weak' ? 'bg-red-500 w-1/3' :
-                strength.strength === 'Medium' ? 'bg-yellow-500 w-2/3' :
-                'bg-green-500 w-full'
+                strength.strength === "Weak"
+                  ? "bg-red-500 w-1/3"
+                  : strength.strength === "Medium"
+                  ? "bg-yellow-500 w-2/3"
+                  : "bg-green-500 w-full"
               }`}
             />
           </div>
