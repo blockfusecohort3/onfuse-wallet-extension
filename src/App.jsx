@@ -61,8 +61,9 @@ function AppRoutes({ theme, toggleTheme }) {
   return (
     <ErrorBoundary>
       <div className={`w-[350px] h-[600px] overflow-hidden ${theme.isDark ? "bg-primary-950" : "bg-white"}`}>
-        <Header theme={theme} toggleTheme={toggleTheme} />
-        <AuthGuard>
+
+        {showHeader && <Header theme={theme} toggleTheme={toggleTheme} />}
+                <AuthGuard>
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
