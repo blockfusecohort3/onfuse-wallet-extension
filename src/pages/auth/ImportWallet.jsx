@@ -1,9 +1,17 @@
+ recoveryPhrase
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { importWallet, saveWallet } from "../../services/walletService";
+import { useWallet } from "../../contexts/WalletContext";
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
 import { importWallet, saveWallet } from '../../services/walletService';
 import { useWallet } from '../../contexts/WalletContext';
+ 
 
 const ImportWallet = () => {
   const [mnemonic, setMnemonic] = useState("");
@@ -22,6 +30,10 @@ const ImportWallet = () => {
       await saveWallet(walletData);
       await loadAccounts();
 
+ recoveryPhrase
+      navigate("/send-receive");
+      toast.success("Wallet imported successfully");
+
       navigate('/send-receive');
       toast.success('Wallet imported successfully');
     } catch (err) {
@@ -33,21 +45,32 @@ const ImportWallet = () => {
   };
 
   return (
+ recoveryPhrase
+    <div className="mt-8 bg-gray-950">
+
     <div className="py-8 bg-gray-950 min-h-screen">
+ main
       <div className="flex gap-1 items-center">
         <h3 className="text-white text-center text-[18px] w-full flex items-center justify-center">
           Import Secret Recovery Phrase
         </h3>
       </div>
 
+  recoveryPhrase
+      <h2 className="text-[#2c4fec] mt-20 text-center">
+ 
       <h2 className="text-gray-300 mt-20 text-center">
+   
         Enter your recovery phrase
       </h2>
 
       <form
         onSubmit={handleImport}
+  recoveryPhrase
+        className="h-auto mx-auto mt-8 text-center w-[319px] border-white rounded-[10px] bg-gray-900 p-4"
+ 
         className="h-auto mx-auto mt-8 text-center w-[325px] rounded-[10px] text-gray-300 text-sm p-3 pr-10 focus:outline-none bg-gray-500/30"
-      >
+       >
         <p className="text-sm text-white mb-2">
           Enter your 12-word phrase. Separate each word with a space.
         </p>
@@ -74,9 +97,14 @@ const ImportWallet = () => {
         <button
           type="submit"
           disabled={loading}
+   
+          className="mt-6 text-white text-lg rounded-3xl px-2 py-1 w-[251px] 
+             bg-gradient-to-r from-primary-800 to-primary-500 to-primary-800 
+             hover:bg-opacity-75 disabled:opacity-50"
+
           className="mt-6 text-white text-lg rounded-3xl px-2 py-1 w-[251px] bg-gradient-to-r from-primary-500 to-primary-800 hover:bg-opacity-75 disabled:opacity-50"
         >
-          {loading ? 'Importing...' : 'Import Wallet'}
+          {loading ? "Importing..." : "Import Wallet"}
         </button>
       </form>
     </div>

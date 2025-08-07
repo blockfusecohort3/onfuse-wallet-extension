@@ -99,11 +99,11 @@ const Home = () => {
   const dollarEquivalent = (balance * ethPrice).toFixed(2)
 
   return (
-    <div className="flex flex-col items-center text-center mt-2 space-y-5">
+    <div className="flex flex-col items-center bg-gray-950 text-center mt-2 space-y-5">
       {/* Balance Row */}
       <div className="space-y-3 mb-6">
         <h1 className="text-white text-xl">Available Balance</h1>
-        <p className="text-primary-400">{balance.toFixed(4)} {selectedNetwork.name === "Ethereum" ? "ETH" : "SepoliaETH"}</p>
+        <p className="text-white">{balance.toFixed(4)} {selectedNetwork.name === "Ethereum" ? "ETH" : "SepoliaETH"}</p>
         <div className="relative">
           <button
             onClick={toggleDropdown}
