@@ -11,6 +11,7 @@ const SecretRecovery = () => {
   const location = useLocation();
  
   const mnemonic = location.state?.mnemonic;
+  
 
   if (!mnemonic) {
     navigate("/");

@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { RotatingLines } from 'react-loader-spinner'
 
 
-const Send = () => {
+const SendTransaction = () => {
   const [loading, setLoading] = useState(false);
   const [inputAddress, setInputAddress] = useState("");
   const [ inputAmount, setInputAmount ] = useState("");
@@ -20,10 +20,13 @@ const Send = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const navigate = useNavigate();
+  
+ 
 
   useEffect(() => {
     const getUserAccounts = () => {
       const savedAccounts = localStorage.getItem('userAccounts');
+   
       if (savedAccounts) {
         const accountsData = JSON.parse(savedAccounts);
         // Generate Blockies avatar for each account dynamically
@@ -239,4 +242,4 @@ const Send = () => {
   );
 };
 
-export default Send;
+export default SendTransaction;

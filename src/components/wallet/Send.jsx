@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { sendTransaction } from "../../services/walletService";
 import { validateAddress } from "../../utils/validation";
+import { decryptData } from "../../utils/storage/secureStorage";
+import { defaultNetworks } from "../../utils/networkconfig/network.config";
+import { helperMethods } from "../../utils/helpers";
 
 const Send = () => {
   const [loading, setLoading] = useState(false);
@@ -11,9 +14,19 @@ const Send = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const privateKey = decryptData(localStorage.getItem("privateKey"))
+  const networkChainId = defaultNetworks.sepolia.chainId
+  const rpcUrl = defaultNetworks.sepolia.rpcUrl
+  console.log(privateKey, networkChainId, rpcUrl)
+
   const handleSend = async () => {
     setError("");
-    
+
+    const privateKey = decryptData(localStorage.getItem("privateKey"))
+    const networkChainId = defaultNetworks.sepolia.chainId
+    const rpcUrl = defaultNetworks.sepolia.rpcUrl
+
+
     try {
       validateAddress(inputAddress);
       if (!inputAmount || parseFloat(inputAmount) <= 0) {
@@ -21,16 +34,20 @@ const Send = () => {
       }
 
       setLoading(true);
-      await sendTransaction(inputAmount, inputAddress);
+      await helperMethods.sendTransaction(privateKey, networkChainId, rpcUrl, inputAddress, inputAmount)
       toast.success("Transaction sent successfully");
       navigate("/send-receive");
     } catch (error) {
+      console.log("err", error)
       setError(error.message);
       toast.error(error.message);
     } finally {
       setLoading(false);
     }
   };
+
+
+
 
   return (
     <div className="flex flex-col items-center mt-5 space-y-8 bg-white min-h-screen">
@@ -59,7 +76,7 @@ const Send = () => {
       {error && <p className="text-red-500 text-sm">{error}</p>}
 
       <div className="space-x-6">
-        <button 
+        <button
           onClick={() => navigate(-1)}
           className="w-32 border-2 border-gray-300 rounded-full py-2 text-gray-700 hover:bg-gray-50 transition-colors"
         >

@@ -2,6 +2,7 @@ import { HashRouter as Router, Routes, Route, useLocation } from "react-router-d
 import { useState, useEffect } from "react";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PropTypes from 'prop-types';
 
 import { WalletProvider } from "./contexts/WalletContext";
 import ErrorBoundary from "./components/common/ErrorBoundary";
@@ -25,7 +26,7 @@ import Transactions from "./components/wallet/Transactions";
 import Profile from "./pages/Profile/Profile";
 import ShowPhrase from "./pages/Profile/ShowPhrase";
 import ViewKey from "./pages/Profile/ViewKey";
-import { checkPropTypes } from "prop-types";
+// import { checkPropTypes } from "prop-types";
 
 import "./App.css";
 
@@ -41,11 +42,12 @@ function AppRoutes({ theme, toggleTheme }) {
 
   const location = useLocation();
   const showNavbar = !["/", "/login", "/signup", "/create-password", "/secret-recovery", "/recovery-guess", "/import-wallet"].includes(location.pathname);
+  const showHeader = !["/", "/login", "/signup", "/create-password", "/secret-recovery", "/recovery-guess", "/import-wallet"].includes(location.pathname);
 
   return (
     <ErrorBoundary>
       <div className={`w-[350px] h-[600px] overflow-hidden ${theme.isDark ? "bg-primary-950" : "bg-white"}`}>
-        <Header theme={theme} toggleTheme={toggleTheme} />
+        {showHeader && <Header theme={theme} toggleTheme={toggleTheme} />}
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
