@@ -102,9 +102,12 @@ const Home = () => {
     <div className="flex flex-col items-center bg-gray-950 text-center mt-2 space-y-5">
       {/* Balance Row */}
       <div className="space-y-3 mb-6">
+        <h1 className="text-white text-xl">Available</h1>
+        <p className="text-primary-400">{balance.toFixed(4)} {selectedNetwork.name === "Ethereum" ? "ETH" : "SepoliaETH"}</p>
+
         <h1 className="text-white text-xl">Available Balance</h1>
         <p className="text-white">{balance.toFixed(4)} {selectedNetwork.name === "Ethereum" ? "ETH" : "SepoliaETH"}</p>
-        <div className="relative">
+<div className="relative">
           <button
             onClick={toggleDropdown}
             className="flex items-center justify-center space-x-4 rounded-full bg-purple-400 text-white w-40 py-1"
