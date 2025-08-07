@@ -14,6 +14,7 @@ const networkColors = {
   Sepolia: "#F7931A",  
 };
 
+
 // Home Component
 const Home = () => {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ const Home = () => {
   const [networks, setNetworks] = useState([]);
   const [balance, setBalance] = useState(0);
   const [ethPrice, setEthPrice] = useState(0);
+
+ 
 
   useEffect(() => {
     const fetchNetwork = async () => {

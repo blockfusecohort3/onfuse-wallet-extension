@@ -7,7 +7,7 @@ const encryptData = (data) => {
     return CryptoJs.AES.encrypt(stringifiedData, ENCRYPTION_KEY).toString();
 }   
 
-const decryptData = (encryptedData) => {
+export const decryptData = (encryptedData) => {
     const bytes = CryptoJs.AES.decrypt(encryptedData, ENCRYPTION_KEY);
     const decryptedData = bytes.toString(CryptoJs.enc.Utf8);
     return JSON.parse(decryptedData);

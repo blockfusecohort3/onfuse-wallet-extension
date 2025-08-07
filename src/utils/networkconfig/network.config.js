@@ -1,4 +1,4 @@
-const NETWORKS = object.freeze({
+const NETWORKS = Object.freeze({
      MAINNET: "mainnet",
     SEPOLIA: "sepolia",
     BSC: "bsc",
@@ -6,7 +6,7 @@ const NETWORKS = object.freeze({
     POLYGON: "polygon",
 })
 
-const defaultNetworks = Object.freeze({
+ const defaultNetworks = Object.freeze({
   [NETWORKS.MAINNET]: Object.freeze({
     name: "Ethereum Mainnet",
     rpcUrl: "https://mainnet.infura.io/v3/1cef973dff844ba09dea342050cd5967",
@@ -40,17 +40,7 @@ const defaultNetworks = Object.freeze({
     explorer: "https://sepolia.etherscan.io",
   }),
 
-   [NETWORKS.SOLANA]: Object.freeze({
-    name: "Solana Mainnet",
-    rpcUrl: "https://api.mainnet-beta.solana.com",
-    wsUrl: "wss://api.mainnet-beta.solana.com",
-    chainId: 101, 
-    symbol: "SOL",
-    ticker: "SOL",
-    explorer: "https://explorer.solana.com",
-    type: "solana",
-   
-  }),
+  
 
 });
 
