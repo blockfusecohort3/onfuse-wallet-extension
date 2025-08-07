@@ -1,8 +1,7 @@
-import { createContext, useContext, useReducer, useCallback } from 'react';
+import { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
 import { secureStorage } from '../utils/storage/secureStorage';
 import { WALLET_CONSTANTS } from '../constants';
 import PropTypes from 'prop-types';
-
 
 const WalletContext = createContext();
 
@@ -11,10 +10,9 @@ const initialState = {
     currentAccount: null,
     balance: 0,
     network: 'ethereum',
-    loading: false,
+    loading: true,
     error: null
 };
-
 
 const walletReducer = (state, action) => {
     switch (action.type) {
@@ -45,8 +43,6 @@ export const useWallet = () => {
     return context;
 };
 
-
-
 export const WalletProvider = ({ children }) => {
   const [state, dispatch] = useReducer(walletReducer, initialState);
 
@@ -74,6 +70,20 @@ export const WalletProvider = ({ children }) => {
     }
   }, [setError]);
 
+  // Auto-load accounts on initialization
+  useEffect(() => {
+    const initializeWallet = async () => {
+      setLoading(true);
+      try {
+        loadAccounts();
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    initializeWallet();
+  }, [loadAccounts, setLoading]);
+
   const value = {
     ...state,
     setLoading,
@@ -90,7 +100,6 @@ export const WalletProvider = ({ children }) => {
   );
 };
 
-
 WalletProvider.propTypes = {
     children: PropTypes.node.isRequired,
-  };
+};
