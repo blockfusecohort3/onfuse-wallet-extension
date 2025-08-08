@@ -25,19 +25,26 @@ export class helperMethods {
 
     return alchemy.wallets.getAddressFromSeedPhrase(seedPhrase);
   }
+ 
   static async sendTransaction(
-    senderPrivateKey,
-    recipientAddress,
-    amount,
-    networkChainId,
-    providerUrl
+    privateKey,
+    inputAddress,
+    inputAmount,
+    networkChainId="11155111",
+    rpcUrl
   ) {
-    const provider = new ethers.JsonRpcProvider(providerUrl, 11155111);
-    const wallet = new ethers.Wallet(senderPrivateKey, provider);
+    console.log(privateKey);
+    console.log(inputAddress)
+    console.log(inputAmount) 
+    console.log(networkChainId) 
+    networkChainId
+    console.log(rpcUrl);
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl, networkChainId);
+    const wallet = new ethers.Wallet(privateKey, provider);
 
     const transaction = {
-      to: recipientAddress,
-      value: ethers.parseEther(amount),
+      to: inputAddress,
+      value: ethers.utils.parseEther(inputAmount),
     };
     return await wallet.sendTransaction(transaction);
   }
