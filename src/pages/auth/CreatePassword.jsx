@@ -10,7 +10,7 @@ import Button from "../../components/common/Button";
 
 const CreatePassword = () => {
   const navigate = useNavigate();
-  const { loadAccounts } = useWallet();
+  const { savePassword } = useWallet();
   const { values, errors, loading, setValue, setError, setLoading } = useSecureForm({
     password: "",
     confirmPassword: "",
@@ -20,7 +20,6 @@ const CreatePassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validate password strength
     const passwordValidation = validatePassword(values.password);
     if (!passwordValidation.isValid) {
       setError('password', passwordValidation.errors[0]);
@@ -43,7 +42,7 @@ const CreatePassword = () => {
     try {
       const walletData = createWallet();
       await saveWallet(walletData);
-      await loadAccounts();
+      savePassword(values.password);
       
       navigate("/secret-recovery", { state: { mnemonic: walletData.mnemonic } });
       toast.success('Wallet created successfully');

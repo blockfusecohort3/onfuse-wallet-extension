@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { validateAddress } from "../../utils/validation";
 import { decryptData } from "../../utils/storage/secureStorage";
-import { defaultNetworks } from "../../utils/networkconfig/network.config";
-import { helperMethods } from "../../utils/helpers";
+import { defaultNetworks, NETWORKS } from "../../utils/networkconfig/network.config";
+import { sendTransaction } from "../../services/walletService";
 
 const Send = () => {
   const [loading, setLoading] = useState(false);
@@ -39,35 +39,46 @@ const Send = () => {
     setError("");
 
     try {
+
       // Validation
       if (!inputAddress.trim()) {
         throw new Error("Please enter a recipient address");
       }
+
+
+      validateAddress(inputAddress.trim());
+
+
       if (!inputAmount || parseFloat(inputAmount) <= 0) {
         throw new Error("Please enter a valid amount greater than 0");
       }
 
-      validateAddress(inputAddress);
+      if (isNaN(inputAmount)) {
+        throw new Error("Invalid amount. Please enter a valid number.");
+      }
+
+      // Decrypt private key from local storage
 
       const privateKey = decryptData(localStorage.getItem("privateKey"));
       if (!privateKey) {
         throw new Error("Private key not found. Please re-import your wallet.");
       }
 
-      const networkChainId = defaultNetworks.sepolia.chainId;
-      const rpcUrl = defaultNetworks.sepolia.rpcUrl;
+      const networkChainId = defaultNetworks[NETWORKS.SEPOLIA].chainId;
+      const network = NETWORKS.SEPOLIA
 
       setLoading(true);
       
-      await helperMethods.sendTransaction(
+      await sendTransaction(
         privateKey, 
         inputAddress.trim(), 
         inputAmount, 
         networkChainId, 
-        rpcUrl
+        network
       );
       
       toast.success("Transaction sent successfully!");
+
       navigate("/send-receive");
       
     } catch (error) {
