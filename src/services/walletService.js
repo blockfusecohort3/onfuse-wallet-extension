@@ -97,22 +97,23 @@ export const getBalance = async (network, address) => {
   }
 };
 
-export const sendTransaction = async (amount, receiver) => {
-  validateAddress(receiver);
+
+export const sendTransaction = async (privateKey, inputAddress, inputAmount, networkChainId, network) => {
+  validateAddress(inputAddress);
   
-  const privateKey = await secureStorage.getItem(WALLET_CONSTANTS.STORAGE_KEYS.PRIVATE_KEY);
+  // const privateKey = await secureStorage.getItem(WALLET_CONSTANTS.STORAGE_KEYS.PRIVATE_KEY);
   if (!privateKey) throw new Error('Private key not found');
   
-  const provider = getProvider('sepolia');
+  const provider = getProvider(network);
   const wallet = new ethers.Wallet(privateKey, provider);
 
   const tx = {
-    to: receiver,
-    value: ethers.utils.parseEther(amount),
+    to: inputAddress,
+    value: ethers.utils.parseEther(inputAmount),
     gasLimit: 21000,
     gasPrice: await provider.getGasPrice(),
     nonce: await provider.getTransactionCount(wallet.address),
-    chainId: 11155111
+    chainId: networkChainId
   };
 
   try {

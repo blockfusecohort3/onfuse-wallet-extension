@@ -26,7 +26,7 @@ const SecretRecovery = () => {
       .then(() => {
         setCopySuccess("Copied!");
         toast.success("Recovery phrase copied to clipboard");
-        setTimeout(() => setCopySuccess(""), 2000);
+        setTimeout(() => setCopySuccess(""), 4000);
       })
       .catch(() => {
         toast.error("Failed to copy to clipboard");
@@ -67,7 +67,7 @@ const SecretRecovery = () => {
         </div>
       </div>
       <div className="flex justify-between items-center w-full max-w-[400px] mt-4 mb-2">
-        <div className="text-white text-sm flex items-center space-x-2">
+        <div className="text-black-300 text-sm flex items-center space-x-2">
           {showPhrase ? (
             <IoEyeOutline
               onClick={() => setShowPhrase(false)}
@@ -82,18 +82,21 @@ const SecretRecovery = () => {
           <span className="text-sm">Show seed phrase</span>
         </div>
         <div
-          className="text-pink-500 text-sm flex items-center space-x-1 cursor-pointer"
+          className="text-purple-400 text-sm flex items-center space-x-1 cursor-pointer"
           onClick={handleCopy}
         >
-          <GoCopy className="text-xl" />
-          <span>Copy to clipboard</span>
-          {copySuccess && (
-            <span className="text-green-500 ml-2">{copySuccess}</span>
+          {copySuccess ? (
+            <span className="text-green-500">{copySuccess}</span>
+          ) : (
+            <>
+              <GoCopy className="text-xl" />
+              <span>Copy to clipboard</span>
+            </>
           )}
         </div>
       </div>
       <button
-        className="mt-2 text-white rounded-full py-2 w-[250px] bg-gradient-to-r from-primary-50 to-primary-100 hover:bg-opacity-75"
+        className="mt-2 text-white rounded-full py-2 w-[250px] bg-gradient-to-r from-black to-gray-600 hover:from-gray-800 hover:to-gray-500"
         onClick={handleSecretGuess}
       >
         Next
