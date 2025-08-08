@@ -16,7 +16,7 @@ const BalanceDisplay = ({ balance, network, ethPrice, loading }) => {
     return (
       <div className="space-y-3 mb-6">
         <h1 className="text-gray-800 text-xl font-semibold">Available Balance</h1>
-        <p className="text-gray-700 text-lg font-medium">{balance.toFixed(4)} {displayToken}</p>
+        <p className="text-gray-700 text-lg font-medium">{balance.toFixed(8)} {displayToken}</p>
         <p className="text-gray-600">${dollarEquivalent}</p>
       </div>
     );
