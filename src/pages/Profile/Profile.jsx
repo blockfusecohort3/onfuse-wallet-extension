@@ -1,12 +1,14 @@
-import React from "react";
 import { HiCurrencyDollar } from "react-icons/hi";
 import { BsGlobeEuropeAfrica } from "react-icons/bs";
-import { MdOutlineStickyNote2, MdKey, MdOutlineNavigateNext } from "react-icons/md";
+import { MdOutlineStickyNote2, MdKey, MdOutlineNavigateNext, MdLock } from "react-icons/md";
 import { CgDarkMode } from "react-icons/cg";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useWallet } from '../../contexts/WalletContext';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { lockWallet } = useWallet();
 
   const handleViewKey = () => {
     navigate('/private-key');
@@ -22,6 +24,11 @@ const Profile = () => {
   };
   const handleNetwork = () => {
     navigate('/network');
+  };
+  const handleLockWallet = () => {
+    lockWallet();
+    toast.success('Wallet locked');
+    navigate('/login');
   };
 
   return (
@@ -68,6 +75,13 @@ const Profile = () => {
             <div className="flex items-center gap-2">
               <MdKey className="text-xl" />
               View Private Key
+            </div>
+            <MdOutlineNavigateNext className="text-xl" />
+          </button>
+          <button className="flex items-center justify-between w-full h-12 px-1 text-red-400 text-sm" onClick={handleLockWallet}>
+            <div className="flex items-center gap-2">
+              <MdLock className="text-xl" />
+              Lock Wallet
             </div>
             <MdOutlineNavigateNext className="text-xl" />
           </button>

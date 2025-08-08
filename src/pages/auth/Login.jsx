@@ -9,7 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { loadAccounts } = useWallet();
+  const { authenticate, accounts } = useWallet();
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -21,16 +21,33 @@ const Login = () => {
 
     setLoading(true);
     try {
-      // Add password validation logic here
-      await loadAccounts();
-      navigate('/send-receive');
-      toast.success('Login successful');
+      const success = authenticate(password);
+      if (success) {
+        navigate('/send-receive');
+        toast.success('Login successful');
+      } else {
+        toast.error('Invalid password');
+      }
     } catch {
-      toast.error('Invalid password');
+      toast.error('Login failed');
     } finally {
       setLoading(false);
     }
   };
+
+  // If no accounts exist, redirect to signup
+  if (accounts.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <h1 className="text-xl text-primary-400 mb-4">No Wallet Found</h1>
+        <Link to="/signup">
+          <button className="bg-gradient-to-r from-primary-50 via-primary-200 to-primary-300 rounded-full py-2 px-6 text-primary-400">
+            Create Wallet
+          </button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -44,6 +61,7 @@ const Login = () => {
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
             className="border-2 border-gray-300 bg-transparent rounded-full px-4 text-primary-400 text-sm p-2 w-full pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter password"
           />
@@ -59,10 +77,6 @@ const Login = () => {
         >
           {loading ? 'Unlocking...' : 'Unlock'}
         </button>
-        
-        <Link to="/signup">
-          <p className="text-gray-400 underline">I don&apos;t have an account</p>
-        </Link>
       </div>
     </div>
   );
