@@ -7,7 +7,7 @@ import { MdCallReceived } from "react-icons/md";
 
 import { useWallet } from "../../contexts/WalletContext.jsx";
 import { useWalletBalance } from "../../hooks/useWalletBalance";
-import { NETWORK_COLORS } from "../../constants";
+import { NETWORK_COLORS } from "../../constants/index.js";
 import NetworkSelector from "./NetworkSelector";
 import BalanceDisplay from "./BalanceDisplay";
 
