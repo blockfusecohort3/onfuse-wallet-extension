@@ -8,14 +8,12 @@ import blockies from 'ethereum-blockies';
 const getProvider = (network) => {
   const providers = {
     ethereum: [
-      'https://eth.public-rpc.com',
-      'https://ethereum.publicnode.com',
-      'https://rpc.ankr.com/eth'
+      `https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_PROJECT_ID}`,
+      'https://eth.public-rpc.com'
     ],
     sepolia: [
-      'https://sepolia.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
-      'https://rpc.sepolia.org',
-      'https://ethereum-sepolia.publicnode.com'
+      `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_PROJECT_ID}`,
+      'https://rpc.sepolia.org'
     ]
   };
 

@@ -37,6 +37,11 @@ const Home = () => {
     return <div className="text-center text-white">No account found</div>;
   }
 
+  // Capitalize network name for color lookup
+  const capitalizedNetwork = network.charAt(0).toUpperCase() + network.slice(1);
+  const networkColor = NETWORK_COLORS[capitalizedNetwork] || "#627EEA";
+
+
   return (
     <div className="flex flex-col items-center text-center mt-2 space-y-5 bg-white min-h-screen">
       <BalanceDisplay 
@@ -47,7 +52,7 @@ const Home = () => {
       />
       
       <NetworkSelector 
-        selectedNetwork={{ name: network, color: NETWORK_COLORS[network] }}
+        selectedNetwork={{ name: capitalizedNetwork, color: networkColor }}
         onNetworkChange={handleNetworkChange}
       />
 

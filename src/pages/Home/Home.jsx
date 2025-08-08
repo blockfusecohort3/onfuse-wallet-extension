@@ -66,6 +66,7 @@ const Home = () => {
           const currentAccount = JSON.parse(localStorage.getItem("userAccounts"))[0];
           
           const network = selectedNetwork.name.toLowerCase();
+          
           const address = currentAccount.publicAddress;
           
           const balanceBigNumber = await getBalance(network, address);
