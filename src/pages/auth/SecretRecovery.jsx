@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const SecretRecovery = () => {
   const [showPhrase, setShowPhrase] = useState(false);
-  // const [copySuccess, setCopySuccess] = useState(""); 
+  const [copySuccess, setCopySuccess] = useState(""); 
   const navigate = useNavigate();
   const location = useLocation();
  
@@ -24,7 +24,7 @@ const SecretRecovery = () => {
     navigator.clipboard
       .writeText(mnemonic)
       .then(() => {
-        // setCopySuccess("Copied!");
+        setCopySuccess("Copied!");
         toast.success("Recovery phrase copied to clipboard");
         setTimeout(() => setCopySuccess(""), 4000);
       })
@@ -72,15 +72,15 @@ const SecretRecovery = () => {
           {showPhrase ? (
             <IoEyeOutline
               onClick={() => setShowPhrase(false)}
-              className="cursor-pointer text-xl"
+              className="cursor-pointer text-gray-300 text-xl"
             />
           ) : (
             <IoEyeOffOutline
               onClick={() => setShowPhrase(true)}
-              className="cursor-pointer text-xl"
+              className="cursor-pointer text-gray-300 text-xl"
             />
           )}
-          <span className="text-pink-500 text-sm flex items-center space-x-1 cursor-pointer">Show seed phrase</span>
+          <span className="text-gray-300 text-sm flex items-center space-x-1 cursor-pointer">Show seed phrase</span>
         </div>
         <div
           className="text-purple-400 text-sm flex items-center space-x-1 cursor-pointer"
@@ -97,7 +97,7 @@ const SecretRecovery = () => {
         </div>
       </div>
       <button
-        className="mt-2 text-white rounded-full py-2 w-[250px] bg-gradient-to-r from-black to-gray-600 hover:from-gray-800 hover:to-gray-500"
+        className="mt-2 text-white rounded-full py-2 w-[250px] bg-gradient-to-r from-primary-500 to-primary-800"
 
         onClick={handleSecretGuess}
       >

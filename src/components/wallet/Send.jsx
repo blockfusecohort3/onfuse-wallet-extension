@@ -38,12 +38,9 @@ const Send = () => {
   };
 
 
-  useEffect(() => {
-    if (inputAddress && !validateAddress(inputAddress)) {
-      setError((prev) => ({ ...prev, address: "Invalid address format" }));
-    } else {
-      setError((prev) => ({ ...prev, address: "" }));
-    }
+
+const handleSend = async () => {
+    setError("");
 
     try {
 
@@ -55,12 +52,6 @@ const Send = () => {
 
       validateAddress(inputAddress.trim());
 
-
-  const handleSend = async () => {
-    if (error.address || error.amount || !inputAddress || !inputAmount) {
-      toast.error("Please fix the input errors before sending.");
-      return;
-    }
 
       if (!inputAmount || parseFloat(inputAmount) <= 0) {
         throw new Error("Please enter a valid amount greater than 0");
@@ -99,11 +90,11 @@ const Send = () => {
       setError(errorMessage);
       toast.error(errorMessage);
       console.error("Transaction error:", error);
-
     } finally {
       setLoading(false);
     }
   };
+
 
 
   return (
