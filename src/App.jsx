@@ -31,8 +31,7 @@ import ViewKey from "./pages/Profile/ViewKey";
 import "./App.css";
 
 const AuthGuard = ({ children }) => {
-
-  const { currentAccount, loading } = useWallet();
+  const { loading, accounts, isAuthenticated } = useWallet();
   const location = useLocation();
   
   if (loading) return <div>Loading...</div>;
@@ -40,11 +39,18 @@ const AuthGuard = ({ children }) => {
   const authRoutes = ["/", "/login", "/signup", "/create-password", "/secret-recovery", "/recovery-guess", "/import-wallet"];
   const isAuthRoute = authRoutes.includes(location.pathname);
   
-  if (!currentAccount && !isAuthRoute) {
+  // If wallet exists but not authenticated, redirect to login
+  if (accounts.length > 0 && !isAuthenticated && !isAuthRoute) {
     return <Navigate to="/login" replace />;
   }
   
-  if (currentAccount && (location.pathname === "/" || location.pathname === "/login")) {
+  // If no wallet exists and not on auth route, redirect to landing
+  if (accounts.length === 0 && !isAuthRoute) {
+    return <Navigate to="/" replace />;
+  }
+  
+  // If authenticated and on login/landing, redirect to wallet
+  if (isAuthenticated && (location.pathname === "/" || location.pathname === "/login")) {
     return <Navigate to="/send-receive" replace />;
   }
   

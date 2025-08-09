@@ -33,7 +33,7 @@ const NETWORKS = Object.freeze({
   }),
   [NETWORKS.SEPOLIA]: Object.freeze({
     name: "Sepolia Testnet",
-    rpcUrl: "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
+    rpcUrl: "https://sepolia.infura.io/v3/960459ef2ba942c4b7dd14d0a96b1d96",
     chainId: 11155111,
     symbol: "Ξ",
     ticker: "SepoliaETH",

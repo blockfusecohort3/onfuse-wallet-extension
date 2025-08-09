@@ -49,7 +49,13 @@ const Home = () => {
     return <div className="text-center text-white">No account found</div>;
   }
 
+  // Capitalize network name for color lookup
+  const capitalizedNetwork = network.charAt(0).toUpperCase() + network.slice(1);
+  const networkColor = NETWORK_COLORS[capitalizedNetwork] || "#627EEA";
+
+
   return (
+
     <motion.div
       className="flex flex-col items-center text-center text-white bg-gray-950 min-h-screen py-8"
       initial="initial"
@@ -65,13 +71,10 @@ const Home = () => {
       </motion.div>
 
       <motion.div {...fadeIn(0.2)}>
-        <NetworkSelector
-          selectedNetwork={{
-            name: network,
-            color: NETWORK_COLORS[network],
-          }}
-          onNetworkChange={handleNetworkChange}
-        />
+           <NetworkSelector 
+        selectedNetwork={{ name: capitalizedNetwork, color: networkColor }}
+        onNetworkChange={handleNetworkChange}
+      />
       </motion.div>
 
       <motion.div {...fadeIn(0.4)} className="flex space-x-10 mt-6">

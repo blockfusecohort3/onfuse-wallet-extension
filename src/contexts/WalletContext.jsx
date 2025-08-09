@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer, useCallback, useEffect } from 'r
 import { secureStorage } from '../utils/storage/secureStorage';
 import { WALLET_CONSTANTS } from '../constants';
 import PropTypes from 'prop-types';
+import CryptoJS from 'crypto-js';
 
 const WalletContext = createContext();
 
@@ -11,7 +12,8 @@ const initialState = {
     balance: 0,
     network: 'ethereum',
     loading: true,
-    error: null
+    error: null,
+    isAuthenticated: false
 };
 
 const walletReducer = (state, action) => {
@@ -28,8 +30,12 @@ const walletReducer = (state, action) => {
         return { ...state, balance: action.payload };
       case 'SET_NETWORK':
         return { ...state, network: action.payload };
+      case 'SET_AUTHENTICATED':
+        return { ...state, isAuthenticated: action.payload };
       case 'CLEAR_ERROR':
         return { ...state, error: null };
+      case 'LOCK_WALLET':
+        return { ...state, isAuthenticated: false, currentAccount: null };
       default:
         return state;
     }
@@ -64,25 +70,57 @@ export const WalletProvider = ({ children }) => {
       if (accounts) {
         dispatch({ type: 'SET_ACCOUNTS', payload: accounts });
         dispatch({ type: 'SET_CURRENT_ACCOUNT', payload: accounts[0] });
+        dispatch({ type: 'SET_AUTHENTICATED', payload: true });
       }
     } catch {
       setError('Failed to load accounts');
     }
   }, [setError]);
 
+  const authenticate = useCallback((password) => {
+    try {
+      const storedHash = secureStorage.getItem('passwordHash');
+      if (!storedHash) return false;
+      
+      const hash = CryptoJS.SHA256(password).toString();
+      if (hash === storedHash) {
+        loadAccounts();
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  }, [loadAccounts]);
+
+  const lockWallet = useCallback(() => {
+    dispatch({ type: 'LOCK_WALLET' });
+  }, []);
+
+  const savePassword = useCallback((password) => {
+    const hash = CryptoJS.SHA256(password).toString();
+    secureStorage.setItem('passwordHash', hash);
+  }, []);
+
   // Auto-load accounts on initialization
   useEffect(() => {
     const initializeWallet = async () => {
       setLoading(true);
       try {
-        loadAccounts();
+        const accounts = secureStorage.getItem(WALLET_CONSTANTS.STORAGE_KEYS.USER_ACCOUNTS);
+        const passwordHash = secureStorage.getItem('passwordHash');
+        
+        if (accounts && passwordHash) {
+          dispatch({ type: 'SET_ACCOUNTS', payload: accounts });
+          // Don't auto-authenticate, require password
+        }
       } finally {
         setLoading(false);
       }
     };
     
     initializeWallet();
-  }, [loadAccounts, setLoading]);
+  }, [setLoading]);
 
   const value = {
     ...state,
@@ -90,6 +128,9 @@ export const WalletProvider = ({ children }) => {
     setError,
     clearError,
     loadAccounts,
+    authenticate,
+    lockWallet,
+    savePassword,
     dispatch
   };
 

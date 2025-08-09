@@ -10,7 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { loadAccounts } = useWallet();
+  const { authenticate, accounts } = useWallet();
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
   
@@ -22,39 +22,35 @@ const Login = () => {
      
     setLoading(true);
     try {
-      // Get the stored password from localStorage
-      const storedPassword = localStorage.getItem('password');
-      
-      if (!storedPassword) {
-        toast.error('No password found. Please sign up.');
-        setLoading(false);
-        return;
-      }
-      
-      
-      const isPasswordValid = comparePassword(password, storedPassword);
-      
-      if (isPasswordValid) {
-        await loadAccounts();
+      const success = authenticate(password);
+      if (success) {
         navigate('/send-receive');
         toast.success('Login successful');
       } else {
-        toast.error('Invalid password. Please try again.');
+        toast.error('Invalid password');
       }
-    } catch (error) {
-      console.error('Login error:', error);
-      toast.error('An error occurred during login');
+    } catch {
+      toast.error('Login failed');
+
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle Enter key press
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleLogin();
-    }
-  };
+  // If no accounts exist, redirect to signup
+  if (accounts.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <h1 className="text-xl text-primary-400 mb-4">No Wallet Found</h1>
+        <Link to="/signup">
+          <button className="bg-gradient-to-r from-primary-50 via-primary-200 to-primary-300 rounded-full py-2 px-6 text-primary-400">
+            Create Wallet
+          </button>
+        </Link>
+      </div>
+    );
+  }
+
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -68,7 +64,8 @@ const Login = () => {
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onKeyUp={handleKeyPress}
+            onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+
             className="border-2 border-gray-300 bg-transparent rounded-full px-4 text-primary-400 text-sm p-2 w-full pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter password"
             autoFocus
@@ -85,10 +82,6 @@ const Login = () => {
         >
           {loading ? 'Unlocking...' : 'Unlock'}
         </button>
-        
-        <Link to="/signup">
-          <p className="text-gray-400 underline">I don&apos;t have an account</p>
-        </Link>
       </div>
     </div>
   );

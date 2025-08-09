@@ -1,8 +1,8 @@
 export const WALLET_CONSTANTS = {
     SEED_PHRASE_COUNT: 12,
     NETWORKS: {
-      ETHEREUM: 'ethereum',
-      SEPOLIA: 'sepolia'
+      ETHEREUM: 'Ethereum',
+      SEPOLIA: 'Sepolia'
     },
     STORAGE_KEYS: {
       MNEMONIC: 'mnemonic',

@@ -99,7 +99,7 @@ const ImportWallet = () => {
           disabled={loading}
    
           className="mt-6 text-white text-lg rounded-3xl px-2 py-1 w-[251px] 
-             bg-gradient-to-r from-primary-800 to-primary-500 to-primary-800 
+             bg-gradient-to-r from-primary-800 to-primary-800 
              hover:bg-opacity-75 disabled:opacity-50"
 
           className="mt-6 text-white text-lg rounded-3xl px-2 py-1 w-[251px] bg-gradient-to-r from-primary-500 to-primary-800 hover:bg-opacity-75 disabled:opacity-50"
