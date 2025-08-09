@@ -28,7 +28,7 @@ class ErrorBoundary extends React.Component {
           {this.state.hasError ? (
             <motion.div
               key="error-screen"
-              className="flex flex-col items-left justify-center h-screen bg-gradient-to-br from-gray-900 to-black text-white p-6"
+              className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-gray-900 to-black text-white p-6"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9 }}
@@ -58,7 +58,7 @@ class ErrorBoundary extends React.Component {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="relative z-10">🔄 Try Again</span>
+                <span className="relative z-10">Try Again</span>
                 <motion.div
                   className="absolute inset-0 bg-blue-400 opacity-30"
                   initial={{ scale: 0, borderRadius: "50%" }}

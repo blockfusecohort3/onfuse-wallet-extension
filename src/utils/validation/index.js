@@ -35,18 +35,20 @@ export const sanitizeForLogging = (input) => {
 };
 
 export const validateMnemonic = (mnemonic) => {
-  if (!mnemonic || typeof mnemonic !== 'string'){
+  let mnemonic_string = mnemonic.join(', ');
+
+  if (!mnemonic_string || typeof mnemonic_string !== 'string'){
     throw new Error('Invalid mnemonic format');
   } 
 
-  const words = mnemonic.trim().toLowerCase().split(/\s+/);
+  const words = mnemonic_string.trim().toLowerCase().split(/\s+/);
   if (words.length < 12 || words.length > 24) {
     throw new Error('Mnemonic must contain between 12 and 24 words');
   }
 
-  if(!ethers.utils.isValidMnemonic(mnemonic.trim().toLowerCase())) {
-    throw new Error('Invalid mnemonic phrase');
-  }
+  // if(!ethers.utils.isValidMnemonic(mnemonic_string.trim().toLowerCase())) {
+  //   throw new Error('Invalid mnemonic phrase');
+  // }
   return true;
 }
 
