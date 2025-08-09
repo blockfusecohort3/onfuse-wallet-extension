@@ -3,7 +3,6 @@ import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useWallet } from '../../contexts/WalletContext';
-import { comparePassword } from '../../utils/validation/passwordValidation';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -71,7 +70,7 @@ const Login = () => {
             autoFocus
           />
           <div className="absolute right-3 cursor-pointer" onClick={togglePasswordVisibility}>
-            {showPassword ? <IoEyeOffOutline className="text-white" /> : <IoEyeOutline className="text-white" />}
+            {showPassword ? <IoEyeOffOutline className="text-black" /> : <IoEyeOutline className="text-black" />}
           </div>
         </div>
 
