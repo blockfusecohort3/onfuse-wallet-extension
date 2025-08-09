@@ -31,7 +31,7 @@ const SignUp = () => {
   return (
    
 <motion.div
-  className="flex flex-col items-center bg-gray-900 h-[600px] p-2 justify-center mt-8"
+  className="flex flex-col items-center bg-gray-950 h-[600px] p-2 justify-center py-8"
   initial={{ opacity: 0, scale: 0.95 }}
   animate={{ opacity: 1, scale: 1 }}
   transition={{ duration: 0.5 }}
@@ -109,7 +109,7 @@ const SignUp = () => {
       <motion.button
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.96 }}
-        className="border-2 border-primary-300 bg-primary-100 text-primary-800 w-[250px] py-2 rounded-full hover:bg-primary-300 hover:bg-opacity-10 hover:text-primary-100 transition-colors"
+        className="border-2 border-primary-300   w-[250px] py-2 rounded-full bg-opacity-10 text-white transition-colors"
         onClick={handleImportWallet}
         variants={{
           hidden: { opacity: 0, y: 10 },

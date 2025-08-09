@@ -15,7 +15,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="navigation">
+    <div className="navigation bg-gradient-to-r from-primary-500 to-primary-800">
       <ul>
         {navItems.map((item, index) => (
           <li

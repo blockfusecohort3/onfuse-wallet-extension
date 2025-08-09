@@ -8,10 +8,12 @@ const Statistics = () => {
   const { balance } = useWalletBalance();
   const [ethPrice, setEthPrice] = useState(0);
   const [priceChange, setPriceChange] = useState(0);
+  const [loading, setLoading] = useState(true); // NEW
 
   useEffect(() => {
     const fetchEthData = async () => {
       try {
+        setLoading(true); // Start loader
         const response = await fetch(
           "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd&include_24hr_change=true"
         );
@@ -20,6 +22,8 @@ const Statistics = () => {
         setPriceChange(data.ethereum.usd_24h_change);
       } catch {
         console.error('Price fetch failed');
+      } finally {
+        setLoading(false); // Stop loader
       }
     };
     fetchEthData();
@@ -28,17 +32,18 @@ const Statistics = () => {
   const portfolioValue = (balance * ethPrice).toFixed(2);
   const portfolioChange = (balance * ethPrice * priceChange / 100).toFixed(2);
 
-  if (!currentAccount) {
+  // Dark loader
+  if (loading || !currentAccount) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-primary-400">No account connected</p>
+      <div className="flex items-center justify-center h-full bg-gray-950">
+        <div className="w-12 h-12 border-4 border-gray-700 border-t-primary-400 rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
     <div className="p-4 bg-gray-950 space-y-6">
-      <h1 className="text-xl text-primary-400 font-semibold">Portfolio Statistics</h1>
+      <h1 className="text-xl text-white font-semibold">Portfolio Statistics</h1>
       
       {/* Portfolio Overview */}
       <div className="bg-primary-900 rounded-lg p-4 border border-primary-800">

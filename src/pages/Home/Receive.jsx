@@ -45,8 +45,13 @@ const Receive = () => {
   };
 
   return (
-    <div className="flex flex-col items-center text-center mt-5 space-y-10">
-      <div className="text-center space-y-5">
+
+    <div className="flex flex-col items-center text-center mt-5 space-y-10"
+
+    >
+      <div className="text-center space-y-5"
+      
+      >
         <h1 className="text-primary-400 text-xl font-normal">Receive</h1>
 
         {/* Display QR Code */}
