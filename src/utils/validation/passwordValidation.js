@@ -41,4 +41,38 @@ export const validatePassword = (password) => {
     if (score < 4) return { strength: 'Medium', color: 'text-yellow-500' };
     return { strength: 'Strong', color: 'text-green-500' };
   };
+
+  // src/utils/validation/passwordValidation.js
+export const comparePassword = (storedpassword,inputpassword) => {
+    const errors = [];
+    
+    // Check minimum length
+    if (inputpassword.length < 8) {
+      errors.push('Password must be at least 8 characters long');
+    }
+    
+    if (storedpassword !== inputpassword){
+      errors.push('Passwords do not match');
+    }
+    
+    // Check for uppercase letter
+    if (!/[A-Z]/.test(inputpassword)) {
+      errors.push('Password must contain at least one uppercase letter');
+    }
+    
+    // Check for lowercase letter
+    if (!/[a-z]/.test(inputpassword)) {
+      errors.push('Password must contain at least one lowercase letter');
+    }
+    
+    // Check for number
+    if (!/[0-9]/.test(inputpassword)) {
+      errors.push('Password must contain at least one number');
+    }
+    
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  };
   

@@ -3,6 +3,7 @@ import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useWallet } from '../../contexts/WalletContext';
+import { comparePassword } from '../../utils/validation/passwordValidation';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,13 +13,13 @@ const Login = () => {
   const { authenticate, accounts } = useWallet();
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
-
+  
   const handleLogin = async () => {
     if (!password) {
       toast.error('Please enter your password');
       return;
     }
-
+     
     setLoading(true);
     try {
       const success = authenticate(password);
@@ -30,6 +31,7 @@ const Login = () => {
       }
     } catch {
       toast.error('Login failed');
+
     } finally {
       setLoading(false);
     }
@@ -49,6 +51,7 @@ const Login = () => {
     );
   }
 
+
   return (
     <div className="min-h-screen flex flex-col items-center">
       <div className="mt-8">
@@ -62,8 +65,10 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+
             className="border-2 border-gray-300 bg-transparent rounded-full px-4 text-primary-400 text-sm p-2 w-full pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter password"
+            autoFocus
           />
           <div className="absolute right-3 cursor-pointer" onClick={togglePasswordVisibility}>
             {showPassword ? <IoEyeOffOutline className="text-white" /> : <IoEyeOutline className="text-white" />}

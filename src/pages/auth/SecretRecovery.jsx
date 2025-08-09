@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const SecretRecovery = () => {
   const [showPhrase, setShowPhrase] = useState(false);
-  const [copySuccess, setCopySuccess] = useState(""); 
+  // const [copySuccess, setCopySuccess] = useState(""); 
   const navigate = useNavigate();
   const location = useLocation();
  
@@ -24,7 +24,7 @@ const SecretRecovery = () => {
     navigator.clipboard
       .writeText(mnemonic)
       .then(() => {
-        setCopySuccess("Copied!");
+        // setCopySuccess("Copied!");
         toast.success("Recovery phrase copied to clipboard");
         setTimeout(() => setCopySuccess(""), 4000);
       })
@@ -40,7 +40,7 @@ const SecretRecovery = () => {
   };
 
   return (
-    <div className="h-[600px] flex flex-col items-center p-4 overflow-auto">
+    <div className="h-full flex flex-col items-center p-6 overflow-auto bg-gray-950">
       <h3 className="text-white text-center text-xl mb-4">
         Write down your Secret Recovery Phrase
       </h3>
@@ -52,8 +52,8 @@ const SecretRecovery = () => {
         <li>Store in a safe deposit box</li>
         <li>Write down and store in multiple secret places</li>
       </ul>
-      <div className="h-[30%] mx-auto text-center w-full max-w-[400px] bg-primary-300 rounded-[10px] p-4 overflow-auto">
-        <div className="flex flex-wrap justify-between gap-2 mb-4">
+      <div className="h-auto mx-auto text-center w-full max-w-[400px] bg-gray-900 rounded-[10px] p-4 overflow-hidden">
+        <div className="flex mt-[-3px] flex-wrap justify-between align-center gap-2">
           {seedPhrases.map((phrase, index) => (
             <span
               key={index}
@@ -68,6 +68,7 @@ const SecretRecovery = () => {
       </div>
       <div className="flex justify-between items-center w-full max-w-[400px] mt-4 mb-2">
         <div className="text-black-300 text-sm flex items-center space-x-2">
+
           {showPhrase ? (
             <IoEyeOutline
               onClick={() => setShowPhrase(false)}
@@ -79,7 +80,7 @@ const SecretRecovery = () => {
               className="cursor-pointer text-xl"
             />
           )}
-          <span className="text-sm">Show seed phrase</span>
+          <span className="text-pink-500 text-sm flex items-center space-x-1 cursor-pointer">Show seed phrase</span>
         </div>
         <div
           className="text-purple-400 text-sm flex items-center space-x-1 cursor-pointer"
@@ -97,6 +98,7 @@ const SecretRecovery = () => {
       </div>
       <button
         className="mt-2 text-white rounded-full py-2 w-[250px] bg-gradient-to-r from-black to-gray-600 hover:from-gray-800 hover:to-gray-500"
+
         onClick={handleSecretGuess}
       >
         Next

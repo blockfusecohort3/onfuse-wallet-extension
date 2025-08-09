@@ -85,8 +85,8 @@ const Transactions = () => {
   }
 
   return (
-    <div className="p-4 space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="p-4 space-y-4 bg-gray-950">
+      <div className="flex items-center  justify-between">
         <h1 className="text-xl text-primary-400 font-semibold">Transactions</h1>
         <button
           onClick={fetchTransactions}
@@ -115,7 +115,7 @@ const Transactions = () => {
           </p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-3 bg-gray-950">
           {transactions.map((tx, index) => (
             <div
               key={index}
@@ -142,7 +142,7 @@ const Transactions = () => {
                 </span>
               </div>
 
-              <div className="space-y-1 text-sm">
+              <div className="space-y-1 bg-gray-950 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-400">Hash:</span>
                   <span className="text-primary-400 font-mono">
