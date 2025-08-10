@@ -2,7 +2,6 @@ import { useEffect, useState, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { helperMethods } from "../../utils/helpers";
-import { validateMnemonic } from "../../utils/validation";
 import { toast } from "react-toastify";
 import { WALLET_CONSTANTS } from "../../constants";
 import { motion } from "framer-motion";

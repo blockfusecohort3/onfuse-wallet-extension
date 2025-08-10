@@ -40,12 +40,15 @@ export const generateMnemonic = () => {
 export const createWallet = () => {
   const mnemonic = generateMnemonic();
   const hdNode = ethers.utils.HDNode.fromMnemonic(mnemonic);
+   const wallet = hdNode.derivePath("m/44'/60'/0'/0/0");
+
+  
   
   return {
     mnemonic: mnemonic,
-    address: hdNode.address,
-    privateKey: hdNode.privateKey,
-    publicKey: hdNode.publicKey
+    address: wallet.address,
+    privateKey: wallet.privateKey,
+    publicKey: wallet.publicKey
   };
 };
 
@@ -56,6 +59,8 @@ export const importWallet = (mnemonic) => {
   const cleaned = mnemonic.trim().toLowerCase();
   const hdNode = ethers.utils.HDNode.fromMnemonic(cleaned);
   const wallet = hdNode.derivePath("m/44'/60'/0'/0/0");
+
+
   
   return {
     mnemonic: cleaned,
