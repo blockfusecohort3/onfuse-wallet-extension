@@ -1,9 +1,8 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { motion } from "framer-motion";
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import { useWallet } from "../../contexts/WalletContext";
+import { useState } from 'react';
+import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useWallet } from '../../contexts/WalletContext';
 
 const Login = () => {
   const [password, setPassword] = useState("");
@@ -83,15 +82,8 @@ const Login = () => {
             placeholder="Enter password"
             autoFocus
           />
-          <div
-            className="absolute right-3 cursor-pointer"
-            onClick={togglePasswordVisibility}
-          >
-            {showPassword ? (
-              <IoEyeOffOutline className="text-white" />
-            ) : (
-              <IoEyeOutline className="text-white" />
-            )}
+          <div className="absolute right-3 cursor-pointer" onClick={togglePasswordVisibility}>
+            {showPassword ? <IoEyeOffOutline className="text-black" /> : <IoEyeOutline className="text-black" />}
           </div>
         </motion.div>
 
