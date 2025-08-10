@@ -50,6 +50,7 @@ export const createWallet = () => {
 };
 
 export const importWallet = (mnemonic) => {
+
   validateMnemonic(mnemonic);
   
   const cleaned = mnemonic.trim().toLowerCase();
@@ -65,9 +66,11 @@ export const importWallet = (mnemonic) => {
 };
 
 export const saveWallet = async (walletData) => {
+  console.log("walletData:", walletData)
   try {
     secureStorage.setItem(WALLET_CONSTANTS.STORAGE_KEYS.MNEMONIC, walletData.mnemonic);
-    secureStorage.setItem(WALLET_CONSTANTS.STORAGE_KEYS.ADDRESS, walletData.address);
+    // secureStorage.setItem(WALLET_CONSTANTS.STORAGE_KEYS.ADDRESS, walletData.address);
+    localStorage.setItem("userAddress", walletData.address)
     secureStorage.setItem(WALLET_CONSTANTS.STORAGE_KEYS.PRIVATE_KEY, walletData.privateKey);
     
     const accounts = [{

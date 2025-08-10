@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { getBalance } from "../../utils/walletUtils";
 import axios from "axios";
 import { ethers } from "ethers";
+import { decryptData } from "../../utils/storage/secureStorage";
 
 const networkColors = {
   Ethereum: "#627EEA", 
@@ -64,7 +65,8 @@ const Home = () => {
     const fetchBalance = async () => {
       try {
           const currentAccount = JSON.parse(localStorage.getItem("userAccounts"))[0];
-          
+              
+          console.log("address:", decryptData(currentAccount) )
           const network = selectedNetwork.name.toLowerCase();
           
           const address = currentAccount.publicAddress;

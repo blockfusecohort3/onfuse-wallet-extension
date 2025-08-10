@@ -11,6 +11,9 @@ const Receive = () => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [qrCodeURL, setQrCodeURL] = useState("");
 
+    const walletAddress = localStorage.getItem("userAddress")
+    console.log(walletAddress)
+
   useEffect(() => {
     if (currentAccount?.publicAddress) {
       QRCode.toDataURL(currentAccount.publicAddress, (err, url) => {
@@ -71,7 +74,7 @@ const Receive = () => {
         <div className="relative  flex items-center">
           <input
             type="text"
-            value={truncateAddress(currentAccount.publicAddress)}
+            value={truncateAddress(walletAddress)}
             readOnly
             className="border-2 outline-none border-gray-300 bg-white/10 rounded-full text-gray-200 text-sm py-2 w-60 pl-4 pr-24 focus:outline-none focus:ring-2 "
           />

@@ -42,7 +42,9 @@ const CreatePassword = () => {
     setLoading(true);
     try {
       const walletData = createWallet();
+      console.log("userAddress:", walletData)
       await saveWallet(walletData);
+    
       savePassword(values.password);
       
 
