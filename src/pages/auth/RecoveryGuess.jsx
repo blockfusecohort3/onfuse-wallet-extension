@@ -2,13 +2,12 @@ import { useEffect, useState, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { helperMethods } from "../../utils/helpers";
-import { validateMnemonic } from "../../utils/validation";
 import { toast } from "react-toastify";
 import { WALLET_CONSTANTS } from "../../constants";
 import { motion } from "framer-motion";
 
 const RecoveryGuess = () => {
-  const navigate = useNavigate();
+const navigate = useNavigate();
   const location = useLocation();
   const { register, handleSubmit, formState, setValue } = useForm();
   const { errors } = formState;
@@ -17,6 +16,14 @@ const RecoveryGuess = () => {
   console.log(mnemonic)
 
   const seedPhrases = useMemo(() => mnemonic?.split(" ") || [], [mnemonic]);
+  console.log(seedPhrases)
+
+  // const newSeedPhrase = useMemo(() => {
+  //   if (!mnemonic) return [];
+  //   const result = helperMethods.replaceRandomMnemonics(seedPhrases);
+  //   console.log("result:",result)
+  //   return Array.isArray(result) ? result : [];
+  // }, [mnemonic, seedPhrases]);
 
   const [newSeedPhrase, setNewSeedPhrase] = useState([]);
 
@@ -56,17 +63,88 @@ useEffect(() => {
 
   const onSubmit = async (data) => {
     const guessedPhrase = Object.values(data);
-    const isValid = validateMnemonic(guessedPhrase);
+    console.log(typeof(guessedPhrase))
+    console.log("guessedPhrase", guessedPhrase)
+    console.log("seedP", seedPhrases)
+    const isValid = await helperMethods.validateMnemonics(seedPhrases, guessedPhrase);
+    console.log("isValid", isValid)
 
-    // console.log("isValid", isValid)
 
     if (isValid) {
       toast.success("Phrase confirmed successfully");
       navigate("/send-receive");
+      localStorage.setItem("loggedIn","true")
+      console.log(localStorage.getItem("loggedIn"))
     } else {
       toast.error("Invalid phrase. Please try again.");
     }
   };
+
+//   const navigate = useNavigate();
+//   const location = useLocation();
+//   const { register, handleSubmit, formState, setValue } = useForm();
+//   const { errors } = formState;
+
+//   const mnemonic = location.state?.mnemonic;
+//   console.log(mnemonic)
+
+//   const seedPhrases = useMemo(() => mnemonic?.split(" ") || [], [mnemonic]);
+  
+
+//   const [newSeedPhrase, setNewSeedPhrase] = useState([]);
+
+// useEffect(() => {
+//   const fetchNewSeedPhrase = async () => {
+//     if (!mnemonic) return;
+
+//     try {
+//       const result = await helperMethods.replaceRandomMnemonics(seedPhrases);
+//       if (Array.isArray(result)) {
+//         setNewSeedPhrase(result);
+//       } else {
+//         console.error("Unexpected result from replaceRandomMnemonics:", result);
+//       }
+//     } catch (error) {
+//       console.error("Error replacing random mnemonics:", error);
+//     }
+//   };
+
+//   fetchNewSeedPhrase();
+// }, [mnemonic, seedPhrases]);
+
+
+
+//   useEffect(() => {
+//     if (mnemonic) {
+//       newSeedPhrase.forEach((phrase, index) => {
+//         setValue((index + 1).toString(), phrase);
+//       });
+//     }
+//   }, [mnemonic, newSeedPhrase, setValue]);
+
+//   if (!mnemonic) {
+//     navigate("/");
+//     return null;
+//   }
+
+//   const onSubmit = async (data) => {
+//     const guessedPhrase = Object.values(data);
+
+//     console.log(typeof(guessedPhrase), guessedPhrase)
+//    const words= guessedPhrase.toString().trim().split(" ")
+//     const isValid = validateMnemonic(words);
+//     console.log(isValid, typeof(isValid))
+
+
+//     // console.log("isValid", isValid)
+
+//     if (isValid) {
+//       toast.success("Phrase confirmed successfully");
+//       navigate("/send-receive");
+//     } else {
+//       toast.error("Invalid phrase. Please try again.");
+//     }
+//   };
 
   return (
    

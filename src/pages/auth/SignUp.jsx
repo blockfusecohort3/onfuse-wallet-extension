@@ -10,7 +10,7 @@ const SignUp = () => {
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
-  };
+  };  
 
   const handleCreateWallet = () => {
     if (isChecked) {
@@ -22,7 +22,7 @@ const SignUp = () => {
 
   const handleImportWallet = () => {
     if (isChecked) {
-      navigate('/import-wallet'); 
+      navigate('/login'); 
     } else {
       toast.error('Please agree to the terms first.');
     }
@@ -116,7 +116,7 @@ const SignUp = () => {
           visible: { opacity: 1, y: 0 },
         }}
       >
-        Import an existing wallet
+      Log In 
       </motion.button>
     </motion.div>
   </motion.div>

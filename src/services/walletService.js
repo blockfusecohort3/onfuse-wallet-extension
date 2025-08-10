@@ -40,21 +40,27 @@ export const generateMnemonic = () => {
 export const createWallet = () => {
   const mnemonic = generateMnemonic();
   const hdNode = ethers.utils.HDNode.fromMnemonic(mnemonic);
+   const wallet = hdNode.derivePath("m/44'/60'/0'/0/0");
+
+  
   
   return {
     mnemonic: mnemonic,
-    address: hdNode.address,
-    privateKey: hdNode.privateKey,
-    publicKey: hdNode.publicKey
+    address: wallet.address,
+    privateKey: wallet.privateKey,
+    publicKey: wallet.publicKey
   };
 };
 
 export const importWallet = (mnemonic) => {
+
   validateMnemonic(mnemonic);
   
   const cleaned = mnemonic.trim().toLowerCase();
   const hdNode = ethers.utils.HDNode.fromMnemonic(cleaned);
   const wallet = hdNode.derivePath("m/44'/60'/0'/0/0");
+
+
   
   return {
     mnemonic: cleaned,
@@ -65,9 +71,11 @@ export const importWallet = (mnemonic) => {
 };
 
 export const saveWallet = async (walletData) => {
+  console.log("walletData:", walletData)
   try {
     secureStorage.setItem(WALLET_CONSTANTS.STORAGE_KEYS.MNEMONIC, walletData.mnemonic);
-    secureStorage.setItem(WALLET_CONSTANTS.STORAGE_KEYS.ADDRESS, walletData.address);
+    // secureStorage.setItem(WALLET_CONSTANTS.STORAGE_KEYS.ADDRESS, walletData.address);
+    localStorage.setItem("userAddress", walletData.address)
     secureStorage.setItem(WALLET_CONSTANTS.STORAGE_KEYS.PRIVATE_KEY, walletData.privateKey);
     
     const accounts = [{

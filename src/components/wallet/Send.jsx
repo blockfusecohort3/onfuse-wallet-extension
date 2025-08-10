@@ -6,18 +6,18 @@ import { decryptData } from "../../utils/storage/secureStorage";
 import { defaultNetworks, NETWORKS } from "../../utils/networkconfig/network.config";
 import { sendTransaction } from "../../services/walletService";
 
-
 const Send = () => {
   const [loading, setLoading] = useState(false);
   const [inputAddress, setInputAddress] = useState("");
   const [inputAmount, setInputAmount] = useState("");
-  const [error, setError] = useState({ address: "", amount: "" });
+  const [error, setError] = useState({ address: "", amount: "" }); // field-level errors
+  const [generalError, setGeneralError] = useState(""); // global error message
 
   const navigate = useNavigate();
 
   const getErrorMessage = (error) => {
     const message = error.message || error.toString();
-    
+
     if (message.includes("insufficient funds")) {
       return "Insufficient funds. Please check your balance or get testnet ETH from a faucet.";
     }
@@ -33,35 +33,30 @@ const Send = () => {
     if (message.includes("nonce")) {
       return "Transaction nonce error. Please try again.";
     }
-    
+
     return message.length > 100 ? "Transaction failed. Please try again." : message;
   };
 
-
-
-const handleSend = async () => {
-    setError("");
+  const handleSend = async () => {
+    setError({ address: "", amount: "" });
+    setGeneralError("");
 
     try {
 
-      // Validation
       if (!inputAddress.trim()) {
-        throw new Error("Please enter a recipient address");
+        setError((prev) => ({ ...prev, address: "Please enter a recipient address" }));
+        return;
       }
-
-
       validateAddress(inputAddress.trim());
 
-
       if (!inputAmount || parseFloat(inputAmount) <= 0) {
-        throw new Error("Please enter a valid amount greater than 0");
+        setError((prev) => ({ ...prev, amount: "Please enter a valid amount greater than 0" }));
+        return;
       }
-
       if (isNaN(inputAmount)) {
-        throw new Error("Invalid amount. Please enter a valid number.");
+        setError((prev) => ({ ...prev, amount: "Invalid amount. Please enter a valid number." }));
+        return;
       }
-
-      // Decrypt private key from local storage
 
       const privateKey = decryptData(localStorage.getItem("privateKey"));
       if (!privateKey) {
@@ -69,25 +64,23 @@ const handleSend = async () => {
       }
 
       const networkChainId = defaultNetworks[NETWORKS.SEPOLIA].chainId;
-      const network = NETWORKS.SEPOLIA
+      const network = NETWORKS.SEPOLIA;
 
       setLoading(true);
-      
+
       await sendTransaction(
-        privateKey, 
-        inputAddress.trim(), 
-        inputAmount, 
-        networkChainId, 
+        privateKey,
+        inputAddress.trim(),
+        inputAmount,
+        networkChainId,
         network
       );
-      
-      toast.success("Transaction sent successfully!");
 
+      toast.success("Transaction sent successfully!");
       navigate("/send-receive");
-      
     } catch (error) {
       const errorMessage = getErrorMessage(error);
-      setError(errorMessage);
+      setGeneralError(errorMessage);
       toast.error(errorMessage);
       console.error("Transaction error:", error);
     } finally {
@@ -95,10 +88,9 @@ const handleSend = async () => {
     }
   };
 
-
-
   return (
     <div className="flex flex-col items-center py-8 space-y-8 bg-gray-950 min-h-screen">
+      {/* Amount Input */}
       <div className="space-y-2 w-72">
         <h1 className="text-white font-medium">Amount</h1>
         <input
@@ -106,17 +98,17 @@ const handleSend = async () => {
           value={inputAmount}
           onChange={(e) => {
             setInputAmount(e.target.value);
-            setError("");
+            setError((prev) => ({ ...prev, amount: "" }));
           }}
           className="border-2 border-gray-300 bg-white rounded-full text-gray-800 text-sm p-3 w-full focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           placeholder="Input amount (ETH)"
           step="0.001"
           min="0"
-
         />
         {error.amount && <p className="text-red-500 text-xs">{error.amount}</p>}
       </div>
 
+  
       <div className="space-y-2 w-72">
         <h1 className="text-white font-medium">To</h1>
         <input
@@ -124,41 +116,36 @@ const handleSend = async () => {
           value={inputAddress}
           onChange={(e) => {
             setInputAddress(e.target.value);
-            setError("");
+            setError((prev) => ({ ...prev, address: "" }));
           }}
           className="border-2 border-gray-300 bg-white rounded-full text-gray-800 text-sm p-3 w-full focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           placeholder="Enter recipient address (0x...)"
-
         />
         {error.address && <p className="text-red-500 text-xs">{error.address}</p>}
       </div>
 
-      {error && (
+      {generalError && (
         <div className="w-72 p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-red-600 text-sm">{error}</p>
+          <p className="text-red-600 text-sm">{generalError}</p>
         </div>
       )}
 
+      
       <div className="space-x-6">
         <button
           onClick={() => navigate(-1)}
           className="w-32 border-2 border-gray-300 rounded-full py-2 text-gray-700 hover:bg-gray-50 transition-colors"
           disabled={loading}
-
         >
-          <span className="relative z-10 transition-transform duration-300 group-hover:-translate-y-1 text-primary-500">
-            Cancel
-          </span>
-          <span className="absolute inset-0 bg-primary-100 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-full"></span>
+          <span className="relative z-10 text-primary-500">Cancel</span>
         </button>
 
         <button
           onClick={handleSend}
           disabled={loading || !inputAddress.trim() || !inputAmount}
           className="w-32 bg-primary-500 hover:bg-primary-600 rounded-full py-2 text-white font-medium transition-colors disabled:opacity-50"
-
         >
-          {loading ? 'Processing...' : 'Send'}
+          {loading ? "Processing..." : "Send"}
         </button>
       </div>
     </div>
