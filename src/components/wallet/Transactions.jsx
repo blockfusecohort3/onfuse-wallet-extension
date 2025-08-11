@@ -85,7 +85,7 @@ const Transactions = () => {
   }
 
   return (
-    <div className="p-4 space-y-4 bg-gray-950">
+    <div className="p-4 h-full space-y-4 bg-gray-950">
       <div className="flex items-center  justify-between">
         <h1 className="text-xl text-primary-400 font-semibold">Transactions</h1>
         <button

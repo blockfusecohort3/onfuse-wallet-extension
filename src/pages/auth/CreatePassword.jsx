@@ -7,7 +7,7 @@ import { createWallet, saveWallet } from "../../services/walletService";
 import { useWallet } from "../../contexts/WalletContext";
 import { validatePassword } from "../../utils/validation/passwordValidation";
 import PasswordInput from "../../components/forms/PasswordInput";
-import Button from "../../components/common/Button";
+import ActiveHeader from "../../components/layout/ActiveHeader";
 
 const CreatePassword = () => {
   const navigate = useNavigate();
@@ -42,11 +42,9 @@ const CreatePassword = () => {
     setLoading(true);
     try {
       const walletData = createWallet();
-      console.log("userAddress:", walletData)
+      console.log("userAddress:", walletData);
       await saveWallet(walletData);
-    
       savePassword(values.password);
-      
 
       navigate("/secret-recovery", { state: { mnemonic: walletData.mnemonic } });
       toast.success("Wallet created successfully");
@@ -60,8 +58,9 @@ const CreatePassword = () => {
 
   return (
     <div className="flex flex-col items-center bg-gray-950 py-8 space-y-6 min-h-screen">
+      <ActiveHeader />
       <div className="text-center">
-        <h1 className="text-xl mb-2 text-white font-semibold">Create Password</h1>
+        <h1 className="text-xl mb-2 text-white mt-14 font-semibold">Create Password</h1>
         <p className="text-sm m-5 text-gray-300">
           This password will unlock your Onfuse wallet only on this device.
         </p>
@@ -102,13 +101,23 @@ const CreatePassword = () => {
 
         {errors.general && <p className="text-red-500 pt-2 text-sm">{errors.general}</p>}
 
-        <Button
+        <motion.button
           type="submit"
-          loading={loading}
-          className="w-full bg-gradient-to-r from-primary-500 to-primary-800 text-white py-3 rounded-full font-medium transition-colors"
+          disabled={loading}
+          whileHover={!loading ? { scale: 1.03 } : {}}
+          whileTap={!loading ? { scale: 0.96 } : {}}
+          className="w-full bg-gradient-to-r from-primary-500 to-primary-800 rounded-full py-3 text-white disabled:opacity-50 flex justify-center items-center font-medium transition-colors"
         >
-          Create Wallet
-        </Button>
+          {loading ? (
+            <motion.div
+              className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 0.6, ease: "linear" }}
+            />
+          ) : (
+            "Create Wallet"
+          )}
+        </motion.button>
       </form>
     </div>
   );

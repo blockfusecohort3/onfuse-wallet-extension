@@ -32,9 +32,9 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col bg-gray-950 gap-5">
+    <div className="flex h-full flex-col bg-gray-950 gap-5">
       {/* Card One */}
-      <div className="w-[300px] h-[200px] mx-6 rounded-xl bg-white/10 p-4">
+      <div className="w-[300px] h-[200px] mt-4 mx-6 rounded-xl bg-white/10 p-4">
         <h1 className="text-white">Preference</h1>
         <div className="flex flex-col">
           <button className="flex items-center justify-between w-full h-12 px-1 text-primary-400 text-sm" onClick={handleCurrency}>
@@ -60,8 +60,7 @@ const Profile = () => {
           </button>
         </div>
       </div>
-      {/* Card two */}
-      <div className="w-[300px] h-[200px] mx-6 rounded-xl bg-white/10 p-4">
+      <div className="w-[300px] h-[220px] mx-6 rounded-xl bg-white/10 p-4">
         <h1 className="text-white">Security</h1>
         <div className="flex flex-col gap-2">
           <button className="flex items-center justify-between w-full h-12 px-1 text-primary-400 text-sm" onClick={handleShowPhrase}>
