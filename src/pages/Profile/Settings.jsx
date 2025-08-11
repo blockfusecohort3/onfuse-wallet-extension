@@ -67,7 +67,7 @@ const Settings = () => {
   ];
 
   return (
-    <div className="p-4 space-y-6">
+    <div className="p-4 space-y-6  bg-gray-950">
       <h1 className="text-xl text-primary-400 font-semibold">Settings</h1>
 
       {/* Account Info */}

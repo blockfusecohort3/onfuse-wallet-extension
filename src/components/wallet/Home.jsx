@@ -114,7 +114,7 @@ const Home = () => {
         <div className="flex items-center justify-between  px-5 py-5">
           <div className="flex items-center gap-3">
             <span className="border-2 border-primary-500 rounded-full p-3 bg-gray-700">
-              <FaEthereum className="text-primary-500 text-lg" />
+              <FaEthereum className="text-white text-lg" />
             </span>
             <div className="flex flex-col items-start">
               <h1 className="text-white font-semibold">ETH</h1>

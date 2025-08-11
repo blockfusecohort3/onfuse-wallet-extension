@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-const Header = ({ theme }) => {
+const ActiveHeader = ({ theme }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isAnimating, setIsAnimating] = useState(false);
@@ -13,17 +13,17 @@ const Header = ({ theme }) => {
     setIsAnimating(true);
     setTimeout(() => {
       navigate(-1);
-    }, 400); // delay matches animation duration
+    }, 400);
   };
 
   return (
-    <div className="flex items-center bg-gray-950 border-b border-gray-600 px-7 py-3">
+    <div className="fixed top-0 left-0 w-full flex items-center bg-gray-950 border-b border-gray-600 px-7 py-3 z-50">
       {location.pathname !== "/" && (
         <motion.button
           onClick={handleBackClick}
           initial={{ x: 0 }}
-          animate={isAnimating ? { x: -15 } : { x: 0 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
+          animate={isAnimating ? { x: -25 } : { x: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
           className="bg-primary-500 hover:bg-primary-600 p-2 rounded-xl"
         >
           <IoIosArrowBack className="text-white text-xl" />
@@ -33,8 +33,8 @@ const Header = ({ theme }) => {
   );
 };
 
-Header.propTypes = {
+ActiveHeader.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 
-export default Header;
+export default ActiveHeader;

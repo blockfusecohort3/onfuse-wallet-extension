@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Logo from "../../assets/images/onfuse-logo.png";
+import ActiveHeader from '../../components/layout/ActiveHeader';
 import { motion } from "framer-motion";
 
 const SignUp = () => {
@@ -36,6 +37,8 @@ const SignUp = () => {
   animate={{ opacity: 1, scale: 1 }}
   transition={{ duration: 0.5 }}
 >
+      <ActiveHeader/>
+
   <motion.div
     className="flex flex-col items-center space-y-2"
     initial={{ opacity: 0, y: -20 }}

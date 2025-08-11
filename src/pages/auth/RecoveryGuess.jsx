@@ -6,6 +6,8 @@ import { validateMnemonic } from "../../utils/validation";
 import { toast } from "react-toastify";
 import { WALLET_CONSTANTS } from "../../constants";
 import { motion } from "framer-motion";
+import ActiveHeader from "../../components/layout/ActiveHeader";
+
 
 const RecoveryGuess = () => {
 const navigate = useNavigate();
@@ -150,6 +152,7 @@ useEffect(() => {
   return (
    
 <div className="min-h-screen bg-gray-950 p-4 flex flex-col items-center justify-start">
+  <ActiveHeader/>
   <motion.h2
     initial={{ opacity: 0, y: -20 }}
     animate={{ opacity: 1, y: 0 }}

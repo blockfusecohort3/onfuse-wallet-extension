@@ -12,7 +12,7 @@ const Receive = () => {
   const [qrCodeURL, setQrCodeURL] = useState("");
 
     const walletAddress = localStorage.getItem("userAddress")
-    console.log(walletAddress)
+    console.log
 
   useEffect(() => {
     if (currentAccount?.publicAddress) {
@@ -58,8 +58,13 @@ const Receive = () => {
   }
 
   return (
-    <div className="flex bg-gray-950 flex-col items-center text-center py-8 space-y-10 min-h-screen">
-      <div className="text-center space-y-5">
+    <div className="flex bg-gray-950 flex-col items-center text-center py-8 space-y-10 min-h-screen"
+                onClick={toggleShareModal}
+
+    >
+      <div className="text-center space-y-5"
+
+      >
         <h1 className="text-white text-xl font-semibold">Receive</h1>
 
         <div className="space-y-5 ">

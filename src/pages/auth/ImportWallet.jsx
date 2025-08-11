@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
 import { importWallet, saveWallet } from '../../services/walletService';
 import { useWallet } from '../../contexts/WalletContext';
+import ActiveHeader from '../../components/layout/ActiveHeader';
 
 const ImportWallet = () => {
   const [mnemonic, setMnemonic] = useState('');
@@ -34,8 +35,9 @@ const ImportWallet = () => {
 
   return (
     <div className="min-h-screen py-8 bg-gray-950">
+      <ActiveHeader/>
       <div className="flex gap-1 items-center">
-        <h3 className="text-white text-center text-[18px] w-full flex items-center justify-center">
+        <h3 className="text-white text-center mt-14 text-[18px] w-full flex items-center justify-center">
           Import Secret Recovery Phrase
         </h3>
       </div>
